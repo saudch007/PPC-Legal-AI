@@ -31,8 +31,14 @@ CHROMA_PERSIST_DIRECTORY = os.path.join(PROJECT_ROOT, "src", "db")
 CHUNK_SIZE = 1500
 CHUNK_OVERLAP = 200
 
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
-    
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY") # for local development
+if not OPENAI_API_KEY:
+    # For Streamlit Cloud or other environments where secrets are used
+    print("Using Streamlit secrets for OpenAI API Key.")
+OPENAI_API_KEY = st.secrets.get("OPENAI_API_KEY")    
+if not OPENAI_API_KEY:
+    raise ValueError("OPENAI_API_KEY is not set. Please set it in your environment or Streamlit secrets.")
+
 
 def ingest_and_get_retriever() -> Optional[Chroma]:
    
