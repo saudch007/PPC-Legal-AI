@@ -1,4 +1,5 @@
 import os
+from pathlib import Path
 from dotenv import load_dotenv
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
@@ -20,9 +21,9 @@ from langchain_core.runnables import chain as runnable_chain # For cleaner chain
 
 
 load_dotenv()
-
+current_file_dir = Path(__file__).parent
 # --- Configuration ---
-PROJECT_ROOT = "D:/AI/legalai"
+PROJECT_ROOT = current_file_dir.parent
 PDF_FILE_PATH = os.path.join(PROJECT_ROOT, "data", "Pakistan_Penal_Code.pdf")
 CHROMA_PERSIST_DIRECTORY = os.path.join(PROJECT_ROOT, "db")
 
