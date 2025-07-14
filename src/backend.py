@@ -23,7 +23,7 @@ from langchain_core.runnables import chain as runnable_chain # For cleaner chain
 load_dotenv()
 
 # --- Configuration ---
-PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+PROJECT_ROOT = Path(__file__).parent.parent
 print(PROJECT_ROOT)
 PDF_FILE_PATH = os.path.join(PROJECT_ROOT, "data", "Pakistan_Penal_Code.pdf")
 CHROMA_PERSIST_DIRECTORY = os.path.join(PROJECT_ROOT, "db")
