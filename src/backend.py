@@ -23,10 +23,10 @@ from langchain_core.runnables import chain as runnable_chain # For cleaner chain
 load_dotenv()
 
 # --- Configuration ---
-PROJECT_ROOT = Path(__file__).parent.parent
-print(PROJECT_ROOT)
-PDF_FILE_PATH = os.path.join(PROJECT_ROOT, "data", "Pakistan_Penal_Code.pdf")
-CHROMA_PERSIST_DIRECTORY = os.path.join(PROJECT_ROOT, "db")
+PROJECT_ROOT = os.getcwd()  # Use current working directory for deployment compatibility
+print("PROJECT_ROOT:", PROJECT_ROOT)
+PDF_FILE_PATH = os.path.join(PROJECT_ROOT, "src", "data", "doc.pdf")
+CHROMA_PERSIST_DIRECTORY = os.path.join(PROJECT_ROOT, "src", "db")
 
 CHUNK_SIZE = 1500
 CHUNK_OVERLAP = 200
