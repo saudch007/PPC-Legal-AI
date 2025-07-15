@@ -26,11 +26,11 @@ from langchain_chroma import Chroma # Corrected import
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.runnables import RunnablePassthrough
-# from langchain.chains import create_retrieval_chain # This is now defined below
 from langchain.chains.combine_documents import create_stuff_documents_chain
 from langchain_core.runnables.history import RunnableWithMessageHistory
 from langchain_community.chat_message_histories import ChatMessageHistory
-from langchain.chains import create_history_aware_retriever, create_retrieval_chain # Import create_retrieval_chain
+# Removed create_history_aware_retriever as we're building it more explicitly
+from langchain.chains import create_retrieval_chain # Keep this for the final chain creation
 
 
 # Load environment variables (important for local development)
@@ -202,65 +202,60 @@ def get_conversational_rag_chain():
     retriever = vector_store.as_retriever(search_kwargs={"k": 5})
     print("DEBUG: Retriever created.")
 
-    # 1. Contextualize question (with history)
-    contextualize_q_system_prompt = """Given the following conversation history and the latest user question, \
-    your task is to rephrase the follow-up question into a clear, standalone question that can be understood \
-    without referring back to the chat history. This rephrased question will be used to retrieve relevant documents.
+    # 1. Query Rewriter Prompt (for standalone question generation)
+    query_rewriter_system_prompt = """Given the following conversation history and the latest user question, \
+    your primary task is to rephrase the latest user question into a clear, concise, and standalone question. \
+    This rephrased question must be fully understandable without any reference to the previous chat history. \
+    It will be used to retrieve relevant documents from a legal knowledge base.
 
-    Key instructions:
-    - **Resolve Pronouns:** If the follow-up question contains pronouns (e.g., "its", "he", "she", "this"), \
-      replace them with the specific entity from the previous conversation turn.
-    - **Incorporate Context:** Ensure the rephrased question includes enough context from the chat history \
-      so it stands alone. For example, if the previous question was "What is dacoity?" and the follow-up is "What is its punishment?", \
-      the rephrased question should be "What is the punishment for dacoity?".
-    - **Handle Meta-Questions:** If the question is a meta-question about the conversation itself (e.g., "what was my previous question?", "who are you?"), \
-      do not attempt to rephrase it for document retrieval. Instead, return the original meta-question as is. The main LLM will handle these.
-    - **Do NOT Answer:** Your sole purpose is to rephrase the question. Do not provide an answer to the question.
-    - **Be Direct:** The output should be a direct, rephrased question, without conversational filler.
+    Key instructions for rephrasing:
+    - **Resolve all pronouns:** Replace any pronouns (e.g., "it", "its", "he", "she", "this", "that") with the specific noun or entity they refer to from the conversation history.
+    - **Incorporate full context:** Ensure the rephrased question contains all necessary context from previous turns. For example, if the history is "What is dacoity?" and the new question is "What is its punishment?", the rephrased question should be "What is the punishment for dacoity?".
+    - **Be specific:** Add details from the conversation history to make the question precise.
+    - **Handle meta-questions directly:** If the user's question is about the conversation itself (e.g., "what was my previous question?", "who are you?", "can you remember this?"), \
+      do NOT rephrase it for document retrieval. Instead, return the original meta-question exactly as it was asked. The main answer generation LLM will handle these.
+    - **Output format:** The output must be ONLY the rephrased question string. Do not include any conversational filler, introductory phrases, or punctuation beyond what is necessary for a clear question. Do not answer the question.
 
-    Example:
+    Example 1:
     Chat History:
     Human: What is theft?
     AI: Theft is defined as...
     Human: What is its punishment?
     Rephrased Question: What is the punishment for theft?
 
+    Example 2:
     Chat History:
     Human: Tell me about Section 302.
     AI: Section 302 deals with punishment for murder.
     Human: What about Section 303?
     Rephrased Question: What about Section 303 of the Pakistan Penal Code?
 
+    Example 3:
     Chat History:
     Human: What is dacoity?
     AI: Dacoity is defined under Section 391...
     Human: what was my previous question?
     Rephrased Question: what was my previous question?
     """
-    contextualize_q_prompt = ChatPromptTemplate.from_messages(
+    query_rewriter_prompt = ChatPromptTemplate.from_messages(
         [
-            ("system", contextualize_q_system_prompt),
+            ("system", query_rewriter_system_prompt),
             MessagesPlaceholder("chat_history"),
             ("human", "{input}"),
         ]
     )
-    print("DEBUG: contextualize_q_prompt created.")
+    print("DEBUG: query_rewriter_prompt created.")
 
-    # The history-aware retriever takes the original input and chat_history,
-    # rewrites the input, and passes it to the underlying retriever.
-    # Its output is the list of retrieved documents.
-    print("DEBUG: Attempting to define history_aware_retriever_chain...")
+    # This chain will take the original input and chat history, and output a rewritten query string.
+    print("DEBUG: Attempting to define query_rewriter_chain...")
     try:
-        history_aware_retriever_chain = create_history_aware_retriever(
-            llm, retriever, contextualize_q_prompt
-        )
-        print("DEBUG: history_aware_retriever_chain successfully defined.")
+        query_rewriter_chain = query_rewriter_prompt | llm | StrOutputParser()
+        print("DEBUG: query_rewriter_chain successfully defined.")
     except Exception as e:
-        print(f"ERROR: Failed to define history_aware_retriever_chain: {e}")
+        print(f"ERROR: Failed to define query_rewriter_chain: {e}")
         return None
 
     # 2. Answer Generation Prompt (with history and context)
-    # IMPROVED: Emphasize formal, direct answers and clarity on non-PPC questions.
     qa_system_prompt = """You are a highly specialized AI assistant focused exclusively on the Pakistan Penal Code (PPC).
     Your primary task is to provide accurate, formal, and direct answers to user questions based *only* on the following retrieved context and the provided chat history.
     The chat history is essential for understanding the full context of the user's current question, especially for follow-up inquiries.
@@ -290,25 +285,36 @@ def get_conversational_rag_chain():
     document_chain = create_stuff_documents_chain(llm, qa_prompt)
     print("DEBUG: document_chain created.")
 
-    # 4. Combine into a retrieval chain using create_retrieval_chain
-    # This helper automatically manages passing input and chat_history through
-    # the history_aware_retriever and then to the document_chain with context.
-    print("DEBUG: Attempting to define retrieval_chain using create_retrieval_chain...")
+    # 4. Define the overall RAG chain flow
+    # This chain takes the original input and chat history.
+    # It first rewrites the query, then uses the rewritten query to retrieve context,
+    # and finally passes everything to the document_chain to generate the answer.
+    print("DEBUG: Attempting to define full_rag_chain_core...")
     try:
-        retrieval_chain_core = create_retrieval_chain(history_aware_retriever_chain, document_chain)
-        print("DEBUG: retrieval_chain_core successfully defined.")
+        full_rag_chain_core = (
+            RunnablePassthrough.assign(
+                # First, rewrite the question based on history
+                # The 'input' and 'chat_history' are passed to query_rewriter_chain
+                standalone_question=query_rewriter_chain
+            )
+            | RunnablePassthrough.assign(
+                # Then, use the 'standalone_question' to retrieve relevant documents
+                context=lambda x: retriever.invoke(x["standalone_question"])
+            )
+            | document_chain # The document_chain receives original input, chat_history, and the new context
+        )
+        print("DEBUG: full_rag_chain_core successfully defined.")
     except Exception as e:
-        print(f"ERROR: Failed to define retrieval_chain_core: {e}")
+        print(f"ERROR: Failed to define full_rag_chain_core: {e}")
         return None
-
 
     # 5. Add memory (Crucial for conversational history management by LangChain)
     conversational_rag_chain = RunnableWithMessageHistory(
-        retrieval_chain_core, # Use the core retrieval chain
+        full_rag_chain_core, # Use the new core chain
         lambda session_id: ChatMessageHistory(),
         input_messages_key="input",
         history_messages_key="chat_history",
-        output_messages_key="answer", # The create_retrieval_chain outputs a dict with 'answer'
+        output_messages_key="answer", # The document_chain outputs the answer
     )
 
     print("DEBUG: Conversational RAG chain constructed successfully.")
@@ -326,11 +332,14 @@ if __name__ == "__main__":
     if chain:
         session_id = "test_session_123" # A unique ID for the conversation session
 
+        # Clear history for fresh test
+        if session_id in ChatMessageHistory.store:
+             del ChatMessageHistory.store[session_id]
+
         print("\n--- Turn 1 ---")
         query1 = "what is dacoity"
         print(f"DEBUG: Querying: '{query1}'")
         try:
-            # For direct testing, you need to explicitly pass an empty chat_history for the first turn
             response1 = chain.invoke({"input": query1, "chat_history": []}, config={"configurable": {"session_id": session_id}})
             print(f"Answer: {response1.get('answer', 'No answer found.')}")
         except Exception as e:
@@ -340,8 +349,6 @@ if __name__ == "__main__":
         query2 = "what is its punishment" # Follow-up question
         print(f"DEBUG: Querying: '{query2}'")
         try:
-            # LangChain's RunnableWithMessageHistory will manage the history internally
-            # based on session_id, so you don't need to pass chat_history explicitly here
             response2 = chain.invoke({"input": query2}, config={"configurable": {"session_id": session_id}})
             print(f"Answer: {response2.get('answer', 'No answer found.')}")
         except Exception as e:
@@ -349,7 +356,7 @@ if __name__ == "__main__":
 
         print("\n--- Turn 3 ---")
         query3 = "what was my previous question?" # Meta-question
-        print(f"DEBUG: Querying: '{query3}')") # Added closing parenthesis for consistency
+        print(f"DEBUG: Querying: '{query3}'")
         try:
             response3 = chain.invoke({"input": query3}, config={"configurable": {"session_id": session_id}})
             print(f"Answer: {response3.get('answer', 'No answer found.')}")
