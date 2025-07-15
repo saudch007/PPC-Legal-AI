@@ -235,6 +235,7 @@ def get_conversational_rag_chain():
     you MUST state: "I am unable to find the answer to your question within the provided Pakistan Penal Code document."
     Do not make up any information. Provide concise and accurate answers, citing relevant sections if applicable.
     If the user asks a question not related to the Pakistan Penal Code, politely inform them that you are specialized in the PPC and cannot answer the question.
+    Also this is the most important part: you MUST go through the document thoroughly before answering any question.
 
     Context: {context}
     """
