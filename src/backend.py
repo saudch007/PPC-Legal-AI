@@ -26,11 +26,11 @@ from langchain_chroma import Chroma # Corrected import
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.runnables import RunnablePassthrough
-from langchain.chains import create_retrieval_chain
+# from langchain.chains import create_retrieval_chain # This is now defined below
 from langchain.chains.combine_documents import create_stuff_documents_chain
 from langchain_core.runnables.history import RunnableWithMessageHistory
 from langchain_community.chat_message_histories import ChatMessageHistory
-from langchain.chains import create_history_aware_retriever
+from langchain.chains import create_history_aware_retriever, create_retrieval_chain # Import create_retrieval_chain
 
 
 # Load environment variables (important for local development)
@@ -203,7 +203,6 @@ def get_conversational_rag_chain():
     print("DEBUG: Retriever created.")
 
     # 1. Contextualize question (with history)
-    # IMPROVED: Make the prompt more explicit about resolving pronouns and follow-ups.
     contextualize_q_system_prompt = """Given the following conversation history and the latest user question, \
     your task is to rephrase the follow-up question into a clear, standalone question that can be understood \
     without referring back to the chat history. This rephrased question will be used to retrieve relevant documents.
@@ -247,16 +246,17 @@ def get_conversational_rag_chain():
     )
     print("DEBUG: contextualize_q_prompt created.")
 
-    print("DEBUG: Attempting to define contextualize_q_chain...")
+    # The history-aware retriever takes the original input and chat_history,
+    # rewrites the input, and passes it to the underlying retriever.
+    # Its output is the list of retrieved documents.
+    print("DEBUG: Attempting to define history_aware_retriever_chain...")
     try:
-        # The history-aware retriever will use this chain to rewrite the query.
-        # This is where the magic for follow-up questions happens.
-        contextualize_q_chain = create_history_aware_retriever(
+        history_aware_retriever_chain = create_history_aware_retriever(
             llm, retriever, contextualize_q_prompt
         )
-        print("DEBUG: contextualize_q_chain (history-aware retriever) successfully defined.")
+        print("DEBUG: history_aware_retriever_chain successfully defined.")
     except Exception as e:
-        print(f"ERROR: Failed to define contextualize_q_chain: {e}")
+        print(f"ERROR: Failed to define history_aware_retriever_chain: {e}")
         return None
 
     # 2. Answer Generation Prompt (with history and context)
@@ -290,34 +290,25 @@ def get_conversational_rag_chain():
     document_chain = create_stuff_documents_chain(llm, qa_prompt)
     print("DEBUG: document_chain created.")
 
-    # 4. Combine into a retrieval chain
-    print("DEBUG: Attempting to define conversational_rag_chain's core logic...")
+    # 4. Combine into a retrieval chain using create_retrieval_chain
+    # This helper automatically manages passing input and chat_history through
+    # the history_aware_retriever and then to the document_chain with context.
+    print("DEBUG: Attempting to define retrieval_chain using create_retrieval_chain...")
     try:
-        # This is the main chain that orchestrates history-aware retrieval and then answers
-        # The 'contextualize_q_chain' (history-aware retriever) takes the original input and chat_history
-        # and outputs a rewritten query. This rewritten query is what 'retriever.get_relevant_documents'
-        # then uses to fetch context.
-        conversational_rag_chain_core = contextualize_q_chain | RunnablePassthrough.assign(
-            context=lambda x: retriever.get_relevant_documents(x["input"]) # x["input"] here is the rewritten query from contextualize_q_chain
-        ) | document_chain
-        print("DEBUG: conversational_rag_chain_core successfully defined.")
+        retrieval_chain_core = create_retrieval_chain(history_aware_retriever_chain, document_chain)
+        print("DEBUG: retrieval_chain_core successfully defined.")
     except Exception as e:
-        print(f"ERROR: Failed to define conversational_rag_chain_core: {e}")
+        print(f"ERROR: Failed to define retrieval_chain_core: {e}")
         return None
 
 
     # 5. Add memory (Crucial for conversational history management by LangChain)
-    # The RunnableWithMessageHistory wrapper manages the chat_history for the entire chain.
     conversational_rag_chain = RunnableWithMessageHistory(
-        conversational_rag_chain_core, # Use the new core chain
-        # This lambda tells LangChain how to get the chat history for a session_id.
-        # For Streamlit, st.session_state will manage the actual history.
-        # This ChatMessageHistory is ephemeral per invocation for LangChain's internal use.
+        retrieval_chain_core, # Use the core retrieval chain
         lambda session_id: ChatMessageHistory(),
-        input_messages_key="input", # Key for current user input
-        history_messages_key="chat_history", # Key for history passed to prompts
-        # The output_messages_key is for the final answer from the chain
-        output_messages_key="answer",
+        input_messages_key="input",
+        history_messages_key="chat_history",
+        output_messages_key="answer", # The create_retrieval_chain outputs a dict with 'answer'
     )
 
     print("DEBUG: Conversational RAG chain constructed successfully.")
