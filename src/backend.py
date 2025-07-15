@@ -1,7 +1,7 @@
 import os
 import sys # Import sys
 from dotenv import load_dotenv
-from langchain_community.document_loaders import PyPDFLoader, TextLoader, DirectoryLoader
+from langchain_community.document_loaders import PyPDFDirectoryLoader, TextLoader, DirectoryLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain.docstore.document import Document
 from typing import List, Optional
@@ -29,8 +29,7 @@ from langchain_core.runnables import RunnablePassthrough
 from langchain.chains.combine_documents import create_stuff_documents_chain
 from langchain_core.runnables.history import RunnableWithMessageHistory
 from langchain_community.chat_message_histories import ChatMessageHistory
-# Removed create_history_aware_retriever as we're building it more explicitly
-from langchain.chains import create_retrieval_chain # Keep this for the final chain creation
+from langchain.chains import create_retrieval_chain
 
 
 # Load environment variables (important for local development)
@@ -40,13 +39,19 @@ load_dotenv()
 current_file_dir = Path(__file__).parent
 PROJECT_ROOT_DIR = current_file_dir.parent
 
-PDF_FILE_PATH = PROJECT_ROOT_DIR / "data" / "Pakistan_Penal_Code.pdf"
-CHROMA_PERSIST_DIRECTORY = PROJECT_ROOT_DIR / "db"
-SCRAPED_DATA_DIR = PROJECT_ROOT_DIR / "scraped_legal_data" # Placeholder for future scraping
+# Define directories for your data sources
+# All PDF files (PPC and additional) are now assumed to be inside the 'data' folder
+PPC_PDF_DIR = PROJECT_ROOT_DIR / "data"
+# This is for your judgments and other text-based scraped data
+SCRAPED_DATA_DIR = PROJECT_ROOT_DIR / "scraped_legal_data"
 
-pdf_path_str = str(PDF_FILE_PATH)
-chroma_dir_str = str(CHROMA_PERSIST_DIRECTORY)
+# Convert Path objects to strings for functions that require them
+ppc_pdf_dir_str = str(PPC_PDF_DIR)
 scraped_data_dir_str = str(SCRAPED_DATA_DIR)
+
+# Directory for ChromaDB persistence
+CHROMA_PERSIST_DIRECTORY = PROJECT_ROOT_DIR / "db"
+chroma_dir_str = str(CHROMA_PERSIST_DIRECTORY)
 
 
 CHUNK_SIZE = 1500
@@ -85,7 +90,7 @@ else:
 def ingest_and_get_retriever() -> Optional[Chroma]:
     """
     Handles data ingestion (loading, chunking, embedding) and returns a ChromaDB instance.
-    Loads from PDF and optionally from scraped data.
+    Loads from a primary PDF directory and a text data directory.
     Checks if the vector store already exists to avoid re-ingestion.
     """
     print("DEBUG: Entering ingest_and_get_retriever function.")
@@ -118,42 +123,55 @@ def ingest_and_get_retriever() -> Optional[Chroma]:
         print(f"\n--- DEBUG: Ingesting data as ChromaDB not found, empty, or failed to load ---")
         all_documents: List[Document] = []
 
-        # --- Load PDF Document ---
-        if not Path(pdf_path_str).exists():
-            print(f"ERROR: The PDF file '{pdf_path_str}' does not exist. Cannot ingest PDF data.")
+        # --- Load ALL PDF Documents from PPC_PDF_DIR (e.g., 'data' folder) ---
+        # PyPDFDirectoryLoader will load all PDFs recursively from this directory and its subfolders.
+        if not Path(ppc_pdf_dir_str).exists():
+            print(f"ERROR: The primary PDF directory '{ppc_pdf_dir_str}' does not exist. Cannot ingest from here.")
         else:
-            print(f"DEBUG: Loading PDF from: {pdf_path_str}")
-            pdf_loader = PyPDFLoader(pdf_path_str)
+            print(f"DEBUG: Loading PDFs from: {ppc_pdf_dir_str} (recursively)")
             try:
-                pdf_pages = list(pdf_loader.lazy_load())
-                for page in pdf_pages:
-                    if page.page_content.strip():
-                        all_documents.append(page)
+                pdf_loader_primary = PyPDFDirectoryLoader(ppc_pdf_dir_str)
+                primary_pdf_docs = pdf_loader_primary.load()
+                # --- ADDED VERIFICATION PRINT STATEMENT ---
+                print(f"DEBUG: Found {len(primary_pdf_docs)} PDF documents in '{ppc_pdf_dir_str}'.")
+                for doc in primary_pdf_docs:
+                    if doc.page_content.strip():
+                        all_documents.append(doc)
                     else:
-                        print(f"DEBUG: Warning: Page {page.metadata.get('page', 'N/A')} of '{os.path.basename(pdf_path_str)}' is empty or contains only whitespace. Skipping.")
-                print(f"DEBUG: Successfully loaded {len(pdf_pages)} pages from the PDF.")
+                        print(f"DEBUG: Warning: Empty page content found in {doc.metadata.get('source', 'N/A')} page {doc.metadata.get('page', 'N/A')}. Skipping.")
+                print(f"DEBUG: Successfully loaded {len(primary_pdf_docs)} documents from primary PDF directory.")
             except Exception as e:
-                print(f"ERROR: Failed to load pages from PDF '{pdf_path_str}': {e}")
+                print(f"ERROR: Failed to load PDFs from '{ppc_pdf_dir_str}': {e}")
 
-        # --- Load Scraped Text Documents (Optional) ---
-        if Path(scraped_data_dir_str).exists():
-            print(f"DEBUG: Loading scraped data from: {scraped_data_dir_str}")
+        # --- Load Scraped Text Documents from SCRAPED_DATA_DIR ---
+        if not Path(scraped_data_dir_str).exists():
+            print(f"DEBUG: Scraped data directory '{scraped_data_dir_str}' not found. Skipping scraped data loading.")
+        else:
+            print(f"DEBUG: Loading scraped text data from: {scraped_data_dir_str}")
             try:
+                # Use DirectoryLoader for .txt files
                 txt_loader = DirectoryLoader(scraped_data_dir_str, glob="**/*.txt", loader_cls=TextLoader)
                 scraped_docs = txt_loader.load()
-                print(f"DEBUG: Loaded {len(scraped_docs)} documents from scraped data.")
-                all_documents.extend(scraped_docs)
+                # --- ADDED VERIFICATION PRINT STATEMENT ---
+                print(f"DEBUG: Found {len(scraped_docs)} text documents in '{scraped_data_dir_str}'.")
+                for doc in scraped_docs:
+                    if doc.page_content.strip():
+                        all_documents.append(doc)
+                    else:
+                        print(f"DEBUG: Warning: Empty page content found in {doc.metadata.get('source', 'N/A')}. Skipping.")
+                print(f"DEBUG: Loaded {len(scraped_docs)} documents from scraped text data.")
             except Exception as e:
                 print(f"ERROR: Failed to load scraped text documents from '{scraped_data_dir_str}': {e}")
-        else:
-            print(f"DEBUG: Scraped data directory '{scraped_data_dir_str}' not found. Skipping scraped data loading.")
 
 
         if not all_documents:
-            print(f"ERROR: No documents were loaded from PDF or scraped data. Cannot proceed with ingestion.")
+            print(f"ERROR: No documents were loaded from any source. Cannot proceed with ingestion.")
             return None
 
         print(f"DEBUG: Total documents loaded for ingestion: {len(all_documents)}.")
+        # --- ADDED FINAL VERIFICATION PRINT STATEMENT ---
+        print(f"DEBUG: Total documents (PDFs + Text) collected before chunking: {len(all_documents)}.")
+
 
         text_splitter = RecursiveCharacterTextSplitter(
             chunk_size=CHUNK_SIZE,
@@ -199,43 +217,44 @@ def get_conversational_rag_chain():
         return None
     print("DEBUG: Vector store obtained.")
 
-    retriever = vector_store.as_retriever(search_kwargs={"k": 5})
+    # Modified: Increased k to 15 for even broader retrieval
+    retriever = vector_store.as_retriever(search_kwargs={"k": 15})
     print("DEBUG: Retriever created.")
 
     # 1. Query Rewriter Prompt (for standalone question generation)
-    query_rewriter_system_prompt = """Given the following conversation history and the latest user question, \
-    your primary task is to rephrase the latest user question into a clear, concise, and standalone question. \
-    This rephrased question must be fully understandable without any reference to the previous chat history. \
-    It will be used to retrieve relevant documents from a legal knowledge base.
+    query_rewriter_system_prompt = """Given the following conversation history and the latest user input (which might be a question or case facts), \
+    your primary task is to rephrase the latest input into a clear, concise, and standalone query. \
+    This rephrased query must be fully understandable without any reference to the previous chat history. \
+    It will be used to retrieve relevant legal documents.
 
     Key instructions for rephrasing:
     - **Resolve all pronouns:** Replace any pronouns (e.g., "it", "its", "he", "she", "this", "that") with the specific noun or entity they refer to from the conversation history.
-    - **Incorporate full context:** Ensure the rephrased question contains all necessary context from previous turns. For example, if the history is "What is dacoity?" and the new question is "What is its punishment?", the rephrased question should be "What is the punishment for dacoity?".
-    - **Be specific:** Add details from the conversation history to make the question precise.
-    - **Handle meta-questions directly:** If the user's question is about the conversation itself (e.g., "what was my previous question?", "who are you?", "can you remember this?"), \
+    - **Incorporate full context:** Ensure the rephrased query contains all necessary context from previous turns to stand alone. For example, if the history is "What is dacoity?" and the new question is "What is its punishment?", the rephrased question should be "What is the punishment for dacoity?".
+    - **Be specific:** Add details from the conversation history to make the query precise.
+    - **Handle meta-questions directly:** If the user's input is about the conversation itself (e.g., "what was my previous question?", "who are you?", "can you remember this?"), \
       do NOT rephrase it for document retrieval. Instead, return the original meta-question exactly as it was asked. The main answer generation LLM will handle these.
-    - **Output format:** The output must be ONLY the rephrased question string. Do not include any conversational filler, introductory phrases, or punctuation beyond what is necessary for a clear question. Do not answer the question.
+    - **Output format:** The output must be ONLY the rephrased query string. Do not include any conversational filler, introductory phrases, or punctuation beyond what is necessary for a clear query. Do not answer the query.
 
     Example 1:
     Chat History:
     Human: What is theft?
     AI: Theft is defined as...
     Human: What is its punishment?
-    Rephrased Question: What is the punishment for theft?
+    Rephrased Query: What is the punishment for theft?
 
     Example 2:
     Chat History:
     Human: Tell me about Section 302.
     AI: Section 302 deals with punishment for murder.
     Human: What about Section 303?
-    Rephrased Question: What about Section 303 of the Pakistan Penal Code?
+    Rephrased Query: What about Section 303 of the Pakistan Penal Code?
 
     Example 3:
     Chat History:
     Human: What is dacoity?
     AI: Dacoity is defined under Section 391...
     Human: what was my previous question?
-    Rephrased Question: what was my previous question?
+    Rephrased Query: what was my previous question?
     """
     query_rewriter_prompt = ChatPromptTemplate.from_messages(
         [
@@ -246,7 +265,6 @@ def get_conversational_rag_chain():
     )
     print("DEBUG: query_rewriter_prompt created.")
 
-    # This chain will take the original input and chat history, and output a rewritten query string.
     print("DEBUG: Attempting to define query_rewriter_chain...")
     try:
         query_rewriter_chain = query_rewriter_prompt | llm | StrOutputParser()
@@ -255,20 +273,22 @@ def get_conversational_rag_chain():
         print(f"ERROR: Failed to define query_rewriter_chain: {e}")
         return None
 
-    # 2. Answer Generation Prompt (with history and context)
-    qa_system_prompt = """You are a highly specialized AI assistant focused exclusively on the Pakistan Penal Code (PPC).
-    Your primary task is to provide accurate, formal, and direct answers to user questions based *only* on the following retrieved context and the provided chat history.
-    The chat history is essential for understanding the full context of the user's current question, especially for follow-up inquiries.
+    # 2. Answer Generation Prompt (for judicial analysis)
+    qa_system_prompt = """You are an AI Legal Analyst, providing a second opinion based *only* on the provided **Pakistani legal documents**, which include the Pakistan Penal Code (PPC), Supreme Court of Pakistan Judgments, and other relevant legal texts.
+    Your task is to analyze the given case information or legal query, identify relevant legal principles, sections, and precedents from the provided documents, and explain their potential applicability.
 
     Key instructions:
-    - **Strictly adhere to context:** If the retrieved context and chat history do NOT contain sufficient information to answer the question, \
-      you MUST respond with: "I am unable to find the answer to your question within the provided Pakistan Penal Code document."
+    - **Role:** You are an assistant to a judge, providing legal analysis, not making a binding judgment.
+    - **Strictly adhere to provided documents:** Your analysis must be based *only* on the content of the documents you have access to.
+    - **Acknowledge Data Gaps (Crucial):** If the retrieved context does not contain sufficient information to provide a comprehensive analysis for a specific legal area (e.g., if foundational statutes like Family Laws or Civil Procedure Code are not present, but only judgments referring to them are), explicitly state this limitation. For example, you might say: "Based on the provided documents, I can analyze aspects related to the Pakistan Penal Code and available judgments. However, a comprehensive analysis of [e.g., Family Law aspects like Khula or Dowry] would require the full text of relevant statutes such as the [e.g., Dissolution of Muslim Marriages Act, Dowry and Bridal Gifts (Restriction) Act, Family Courts Act], which are not present in my current knowledge base."
+    - **Prioritize Relevant Findings:** Even if a comprehensive analysis isn't possible, if you find *any* relevant judgments or PPC sections that touch upon aspects of the query, you MUST present those findings clearly, before stating any limitations. Do not give a blanket "unable to provide" if partial information exists.
     - **No Hallucinations:** Do not invent or infer any information not explicitly present in the provided context.
-    - **Concise and Accurate:** Provide answers that are to the point and factually correct based on the PPC.
-    - **Cite Sections (if applicable):** If an answer is directly from a specific section, mention the section number (e.g., "Section 391 states...").
-    - **PPC Scope Only:** If the user asks a question that is clearly outside the scope of the Pakistan Penal Code (e.g., general knowledge, personal opinions, or questions about other legal systems), \
-      politely inform them that you are specialized in the PPC and cannot answer the question. Do not attempt to answer unrelated questions.
-    - **Formal Tone:** Maintain a professional and formal tone. Avoid colloquialisms, emojis, or excessive punctuation (like multiple exclamation marks or question marks).
+    - **Concise and Accurate:** Provide answers that are to the point and factually correct based on the provided legal documents.
+    - **Cite Sources:** Always cite the relevant section numbers from the PPC (e.g., "Section 391 states...") or reference specific judgments if the information is derived from them (e.g., "As per the judgment in [Case Name/Citation]...").
+    - **Formal and Objective Tone:** Maintain a professional, objective, and formal tone. Avoid colloquialisms, emojis, or excessive punctuation.
+    - **Legal Scope Only:** If the input is clearly outside the scope of Pakistani legal documents (e.g., general knowledge, personal opinions, or questions about other legal systems), \
+      politely inform the user that you are specialized in Pakistani law and cannot analyze the given information. Do not attempt to answer unrelated queries.
+    - **Disclaimer:** Conclude every analysis with a clear disclaimer: "Please note: This is an AI-generated legal analysis based solely on the provided Pakistani legal documents. It is for informational purposes only and does not constitute legal advice or a judicial ruling. A qualified legal professional should always be consulted for definitive legal opinions and decisions."
 
     Context: {context}
     """
@@ -286,22 +306,16 @@ def get_conversational_rag_chain():
     print("DEBUG: document_chain created.")
 
     # 4. Define the overall RAG chain flow
-    # This chain takes the original input and chat history.
-    # It first rewrites the query, then uses the rewritten query to retrieve context,
-    # and finally passes everything to the document_chain to generate the answer.
     print("DEBUG: Attempting to define full_rag_chain_core...")
     try:
         full_rag_chain_core = (
             RunnablePassthrough.assign(
-                # First, rewrite the question based on history
-                # The 'input' and 'chat_history' are passed to query_rewriter_chain
                 standalone_question=query_rewriter_chain
             )
             | RunnablePassthrough.assign(
-                # Then, use the 'standalone_question' to retrieve relevant documents
                 context=lambda x: retriever.invoke(x["standalone_question"])
             )
-            | document_chain # The document_chain receives original input, chat_history, and the new context
+            | document_chain
         )
         print("DEBUG: full_rag_chain_core successfully defined.")
     except Exception as e:
@@ -336,50 +350,41 @@ if __name__ == "__main__":
         if session_id in ChatMessageHistory.store:
              del ChatMessageHistory.store[session_id]
 
-        print("\n--- Turn 1 ---")
-        query1 = "what is dacoity"
+        print("\n--- Test Case 1: Dacoity and its punishment ---")
+        query1 = "A group of six individuals, armed with knives, entered a bank and forcibly took money from the cashier. They threatened customers but did not physically harm anyone. What does the Pakistan Penal Code say about this act, and what would be the rightful decision?"
         print(f"DEBUG: Querying: '{query1}'")
         try:
             response1 = chain.invoke({"input": query1, "chat_history": []}, config={"configurable": {"session_id": session_id}})
             print(f"Answer: {response1.get('answer', 'No answer found.')}")
         except Exception as e:
-            print(f"ERROR: During RAG chain invocation (Turn 1): {e}")
+            print(f"ERROR: During RAG chain invocation (Test Case 1): {e}")
 
-        print("\n--- Turn 2 ---")
-        query2 = "what is its punishment" # Follow-up question
-        print(f"DEBUG: Querying: '{query2}'")
+        print("\n--- Test Case 2: Follow-up on punishment ---")
+        query2 = "What punishment is prescribed for such an act?"
+        print(f"DEBUG: Querying: '{query2}')")
         try:
             response2 = chain.invoke({"input": query2}, config={"configurable": {"session_id": session_id}})
             print(f"Answer: {response2.get('answer', 'No answer found.')}")
         except Exception as e:
-            print(f"ERROR: During RAG chain invocation (Turn 2): {e}")
+            print(f"ERROR: During RAG chain invocation (Test Case 2): {e}")
 
-        print("\n--- Turn 3 ---")
-        query3 = "what was my previous question?" # Meta-question
+        print("\n--- Test Case 3: Kidnapping scenario ---")
+        query3 = "A person secretly takes a 15-year-old girl from her school without her parents' consent, intending to marry her. What sections of the PPC are relevant here, and what is the legal implication?"
         print(f"DEBUG: Querying: '{query3}'")
         try:
             response3 = chain.invoke({"input": query3}, config={"configurable": {"session_id": session_id}})
             print(f"Answer: {response3.get('answer', 'No answer found.')}")
         except Exception as e:
-            print(f"ERROR: During RAG chain invocation (Turn 3): {e}")
+            print(f"ERROR: During RAG chain invocation (Test Case 3): {e}")
 
-        print("\n--- Turn 4 ---")
-        query4 = "what is kidnapping?" # New question, testing context reset
-        print(f"DEBUG: Querying: '{query4}'")
+        print("\n--- Test Case 4: Irrelevant question ---")
+        query4 = "What is the capital of France?"
+        print(f"DEBUG: Querying: '{query4}')")
         try:
             response4 = chain.invoke({"input": query4}, config={"configurable": {"session_id": session_id}})
             print(f"Answer: {response4.get('answer', 'No answer found.')}")
         except Exception as e:
-            print(f"ERROR: During RAG chain invocation (Turn 4): {e}")
-
-        print("\n--- Turn 5 ---")
-        query5 = "punishment for it" # Follow-up to kidnapping
-        print(f"DEBUG: Querying: '{query5}'")
-        try:
-            response5 = chain.invoke({"input": query5}, config={"configurable": {"session_id": session_id}})
-            print(f"Answer: {response5.get('answer', 'No answer found.')}")
-        except Exception as e:
-            print(f"ERROR: During RAG chain invocation (Turn 5): {e}")
+            print(f"ERROR: During RAG chain invocation (Test Case 4): {e}")
 
     else:
         print("ERROR: Failed to get conversational RAG chain.")
