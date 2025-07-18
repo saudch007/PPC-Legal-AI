@@ -54,8 +54,9 @@ CHROMA_PERSIST_DIRECTORY = PROJECT_ROOT_DIR / "db"
 chroma_dir_str = str(CHROMA_PERSIST_DIRECTORY)
 
 
-CHUNK_SIZE = 1500
-CHUNK_OVERLAP = 200
+# Modified: Further reduced CHUNK_SIZE and CHUNK_OVERLAP
+CHUNK_SIZE = 200 # Reduced from 300
+CHUNK_OVERLAP = 40 # Reduced from 50
 
 # --- Corrected OpenAI API Key Handling (Global Initialization) ---
 OPENAI_API_KEY: Optional[str] = None
@@ -137,6 +138,9 @@ def ingest_and_get_retriever() -> Optional[Chroma]:
                 for doc in primary_pdf_docs:
                     if doc.page_content.strip():
                         all_documents.append(doc)
+                        # --- VERIFY PDF CONTENT LOADING ---
+                        # Print source and first 200 characters of content for verification
+                        print(f"DEBUG: Loaded PDF: {doc.metadata.get('source', 'Unknown Source')}, Page {doc.metadata.get('page', 'N/A')}. Content snippet: '{doc.page_content[:200].replace('\n', ' ')}...'")
                     else:
                         print(f"DEBUG: Warning: Empty page content found in {doc.metadata.get('source', 'N/A')} page {doc.metadata.get('page', 'N/A')}. Skipping.")
                 print(f"DEBUG: Successfully loaded {len(primary_pdf_docs)} documents from primary PDF directory.")
@@ -148,20 +152,29 @@ def ingest_and_get_retriever() -> Optional[Chroma]:
             print(f"DEBUG: Scraped data directory '{scraped_data_dir_str}' not found. Skipping scraped data loading.")
         else:
             print(f"DEBUG: Loading scraped text data from: {scraped_data_dir_str}")
-            try:
-                # Use DirectoryLoader for .txt files
-                txt_loader = DirectoryLoader(scraped_data_dir_str, glob="**/*.txt", loader_cls=TextLoader)
-                scraped_docs = txt_loader.load()
-                # --- ADDED VERIFICATION PRINT STATEMENT ---
-                print(f"DEBUG: Found {len(scraped_docs)} text documents in '{scraped_data_dir_str}'.")
-                for doc in scraped_docs:
-                    if doc.page_content.strip():
-                        all_documents.append(doc)
-                    else:
-                        print(f"DEBUG: Warning: Empty page content found in {doc.metadata.get('source', 'N/A')}. Skipping.")
-                print(f"DEBUG: Loaded {len(scraped_docs)} documents from scraped text data.")
-            except Exception as e:
-                print(f"ERROR: Failed to load scraped text documents from '{scraped_data_dir_str}': {e}")
+            scraped_docs_list: List[Document] = [] # Use a new list to collect docs
+            # Iterate through files in the directory to handle errors per file
+            for file_entry in os.listdir(scraped_data_dir_str):
+                file_path = os.path.join(scraped_data_dir_str, file_entry)
+                if os.path.isfile(file_path) and file_path.lower().endswith('.txt'):
+                    try:
+                        # Load each text file individually with explicit encoding
+                        single_txt_loader = TextLoader(file_path, encoding='utf-8')
+                        loaded_doc = single_txt_loader.load()
+                        if loaded_doc and loaded_doc[0].page_content.strip():
+                            scraped_docs_list.extend(loaded_doc)
+                            print(f"DEBUG: Loaded Text: {file_path}. Content snippet: '{loaded_doc[0].page_content[:200].replace('\n', ' ')}...'")
+                        else:
+                            print(f"DEBUG: Warning: Empty page content found in {file_path}. Skipping.")
+                    except Exception as e:
+                        print(f"ERROR: Failed to load text file {file_path}: {e}")
+            
+            print(f"DEBUG: Found {len(scraped_docs_list)} text documents in '{scraped_data_dir_str}'.")
+            if scraped_docs_list:
+                all_documents.extend(scraped_docs_list)
+                print(f"DEBUG: Successfully loaded {len(scraped_docs_list)} documents from scraped text data.")
+            else:
+                print("DEBUG: No text documents were successfully loaded from scraped data directory.")
 
 
         if not all_documents:
@@ -174,8 +187,8 @@ def ingest_and_get_retriever() -> Optional[Chroma]:
 
 
         text_splitter = RecursiveCharacterTextSplitter(
-            chunk_size=CHUNK_SIZE,
-            chunk_overlap=CHUNK_OVERLAP,
+            chunk_size=CHUNK_SIZE, # Modified: Further reduced chunk size
+            chunk_overlap=CHUNK_OVERLAP, # Modified: Further reduced chunk overlap
             length_function=len,
         )
         document_chunks: List[Document] = text_splitter.split_documents(all_documents)
@@ -217,8 +230,8 @@ def get_conversational_rag_chain():
         return None
     print("DEBUG: Vector store obtained.")
 
-    # Modified: Increased k to 15 for even broader retrieval
-    retriever = vector_store.as_retriever(search_kwargs={"k": 15})
+    # Modified: Increased k to 20 for even broader retrieval
+    retriever = vector_store.as_retriever(search_kwargs={"k": 20})
     print("DEBUG: Retriever created.")
 
     # 1. Query Rewriter Prompt (for standalone question generation)
@@ -245,6 +258,7 @@ def get_conversational_rag_chain():
     Example 2:
     Chat History:
     Human: Tell me about Section 302.
+    AI: Section 302 deals with punishment for murder.
     AI: Section 302 deals with punishment for murder.
     Human: What about Section 303?
     Rephrased Query: What about Section 303 of the Pakistan Penal Code?
@@ -319,8 +333,8 @@ def get_conversational_rag_chain():
         )
         print("DEBUG: full_rag_chain_core successfully defined.")
     except Exception as e:
-        print(f"ERROR: Failed to define full_rag_chain_core: {e}")
-        return None
+            print(f"ERROR: Failed to define full_rag_chain_core: {e}")
+            return None
 
     # 5. Add memory (Crucial for conversational history management by LangChain)
     conversational_rag_chain = RunnableWithMessageHistory(
@@ -337,9 +351,12 @@ def get_conversational_rag_chain():
 
 # --- Direct Testing Block (will only run if backend.py is executed directly) ---
 if __name__ == "__main__":
+    # This block is for local testing/debugging the backend script directly.
+    # It will not run when deployed via Streamlit.
     print("DEBUG: Testing backend.py directly with conversational chain...")
     if os.getenv("OPENAI_API_KEY") is None:
-        os.environ["OPENAI_API_KEY"] = "sk-YOUR_TEST_OPENAI_API_KEY_HERE" # Replace with your real key for local testing
+        # Placeholder for local testing if API key not in .env
+        os.environ["OPENAI_API_KEY"] = "sk-YOUR_TEST_OPENAI_API_KEY_HERE"
         print("DEBUG: Set dummy OPENAI_API_KEY for direct backend.py testing.")
 
     chain = get_conversational_rag_chain()

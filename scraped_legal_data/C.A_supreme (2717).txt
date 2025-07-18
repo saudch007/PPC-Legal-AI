@@ -1,0 +1,1163 @@
+SMC No.1/2023, etc  1 
+ 
+Table of Contents  
+Preface ................................ ................................ ................................ ................................ .. 1 
+Background facts  ................................ ................................ ................................ ...................  3 
+Suo motu proceedings and constitution petitions in this Court  ................................ ................  4 
+Our reservations on the invocation of suo motu jurisdiction and constitution of the Bench  ...... 5 
+Decisi on by two Hon’ble Judges and recusal by two Hon’ble Judges and further hearing 
+by the remaining five Judges  ................................ ................................ ................................ . 5 
+Scope of jurisdiction of this Court under Article 184(3) during pendency of the same 
+matter before the High Courts  ................................ ................................ ................................  7 
+High Court judgment al ready in the field – how can original jurisdiction under Article 
+184(3) be exercised against a judicial pronouncement of a High Court, directly or 
+indirectly  ................................ ................................ ................................ ............................... 11 
+Applicability of res judicata to a decision of a High Court made under Article 199  .................. 15 
+Federalism - Judicial propriety in allowing the High Courts of the respective Provinces to 
+decide upon matters that relate to those Provinces only  ................................ ........................ 17 
+Parliament is the best forum and political dialogue is the best way to resolve political 
+issues  ................................ ................................ ................................ ................................ ...19 
+Decision by 4 -3 or 3 -2 majority  ................................ ................................ ............................. 20 
+Need of making rules for regulating the exercise of jurisdiction under Article 184(3) and 
+the constitution of Benches  ................................ ................................ ................................ ...23 
+ 
+JUDGMENT  
+Syed Mansoor Ali Shah, J. - (For himself and Jamal Khan Mandokhail, J.)  
+Preface  
+The jurisdiction of a court is determined by the Constitution and laws, 
+not by caprice or convenience of the judges.1 And, i t is the nature of the 
+controversy that determines the jurisdiction  of a court and not the 
+magnitude of the interests involved .2 When caprice and convenience of 
+the judges takes over , we enter  the era of an “imperial Supreme Cour t”. 
+According to  Professor Mark A. Lemley ,3 the U.S. Supreme Court has by 
+its decisions given in the past few years, restricted the power of the 
+Congress, the administration and the lower federal courts, and has 
+concentrated the power in itself. The immediate danger of the imperial 
+Supreme Court,  writes Professor  Lemley,  is that it will damage the 
+constitutional system by usurping the power that doesn’t belong to it; 
+but the longer -term danger may be the opposite. The Court, by turning 
+it in the minds of the public into just another political insti tution, may 
+ultimately undermine its legitimacy and credibility of its judgments.  We 
+must ensure that our Supreme Court does not assume the role of an 
+imperial Supreme Court with its judicial decisions restricting the power 
+of the Parliament, the Governmen t and the provincial High Courts 
+                                                             
+1 Attributed to John Marshall, Fourth Chief Justice of the United States Supreme Court (1801 -1835 ).  
+2 Oliver Wendell Holmes, Associate Justice of the United States Supreme Court (1902 -1932) . 
+3 Mark A. Lemley , The Imper ial Supreme Court ,136 Harv. L. Rev. F. 97 (2022).  SMC No.1/2023, etc  2 
+ 
+assuming all the powers to  itself, and must remember that  “we have no 
+more right to decline the exercise of jurisdiction which is given, than to 
+usurp that which is not given.”4 
+2.  The present suo motu  proceedings and the connected 
+constitutional petitions invite the Court to exercise its original  
+jurisdiction  under Article 184(3) of the Constitution of the Islamic 
+Republic of Pakistan (“Constitituion”)  inspite of the fact that the 
+matters involved are already  pending adjudication before the provincial 
+High Courts  and the question of law involved in one case has been 
+decided by the High Court of the Province concerned . It is, therefore,  
+crucial that before embarking upon  its or iginal jurisdiction  under 
+Article 184(3) of the Constitutio n, this Court carefully assess es that 
+such an exercise of dis cretion ary jurisdiction  does not border on judicial 
+overreach , paint ing the Court, in the words of Professor Lemley, as an 
+“imperial Supreme Court ”. The original jurisdiction of this Court under 
+Article 184(3) of the Constitution is not only “discretionary”5 but also 
+“special”6 and “extraordinary”7, which is to be exercised “with 
+circumspection ”8 only in the “exceptional cases ”9 of public importance 
+relating to the enforcement of fundamental rights  that are considered 
+“fit”10 for being dealt with under this jurisdiction by the Court. This 
+jurisdiction of the Court is special and extraordinary , for in the exercise 
+of it the Court acts as the first and the final arbiter , which leaves a 
+party aggrieved of the determination made by the Court with no remedy 
+of appeal to any higher court . This jurisdiction  must not , therefore,  be 
+frequent ly and incautious ly exercise d, lest it damages the public image 
+of the Court as an impartial judicial institution.11 Foundations of a 
+judicial institution stand on, and its real strength lies , in the public 
+trust and w ithout such public trust and public acceptance, a court  
+loses the legitimacy it requires to perform its functions. A court’s 
+                                                             
+4 Cohens v. Virginia (1821)  per John Marshall.  
+5 Akhtar Hassan v. Federation of Pakistan 2012  SCMR  455; Tahir -ul-Qadri  v. Federation of Pakistan 
+PLD 2013 SC 413; Ashraf Tiwana  v. Pakistan 2013 SCMR 1159.  
+6 Manzoor Elahi  v. Federation of Pakistan PLD 1975 SC 66 per Anwarul Haq, J.  
+7 Ibid per Hamoodur Rahman, C J.   
+8 Ibid. 
+9 H.R.C No.5818 of 2006    2008 SCMR 531.  
+10 Manzoor Elahi  v. Federation of Pakistan PLD 1975 SC 66 per Anwarul Haq, J.  
+11 See Yasser Kureshi , Seeking  Supremacy: The Pursuit of Judicial Power in Pakistan  (2022); Asher Asif 
+Qazi, A Government of Judges: A Story of The Pakistani Supreme Court's Strategic Expansion  (2018); 
+Maryam S. Khan, Genesis and Evolution of Public Interest Litigation in the Supreme Court of Pakistan: 
+Toward A Dynamic Theory of Judicialization  (2015).  SMC No.1/2023, etc  3 
+ 
+concern with legitimacy is therefore not for its own  sake but for the 
+sake of the people  to which it is responsible.12   
+Background facts   
+3.  In the context of the dissolution of the Provincial Assembly 
+of the Province of Punjab on 14.01.2023, a dispute arose  in regard to 
+appointing a date for the election , which involved the question of law : 
+Who has the constitutional power and duty to appoint a 
+date for the holding of a general election to a Provincial 
+Assembly that stands dissolved under the second part of 
+clause (1) of Article 112 of the Constitution at the 
+expiration of forty -eight hours af ter the Chief Minister has 
+advised the Governor to dissolve the Assembly but the 
+Governor has not  made any express order thereon?   
+A political party, Pakistan Tehreek -i-Insaaf (“PTI”), through its Secretary 
+General moved the Provincial  High Court concerned , i.e., the Lahore 
+High Court, by filing a writ petition13 under Article 199 of the 
+Constitution for determination of the said question . A Single Bench of 
+the Lahore High Court decided the said writ petition , along  with other 
+connected writ petitions,  by its judgment dated 10.02.2023, holding 
+that it is the Election Commission of Pakistan  (“ECP”)  which is to 
+appoint  a date for the holding of a general election when a Provincial 
+Assembly stands dissolved under the second part of clause (1) of Article 
+112 o f the Constitution and consequent ly directed  the ECP to 
+immediately announce the date of the election, after consultation with 
+the Governor of Punjab.   
+4.  The ECP and the Governor of Punjab preferred intra -court 
+appeals (“ICA s”) before the Division Bench of the Lahore High Court 
+against the Single Bench judgment dated 10.02.2023 , which are 
+pending adjudication . In the ICA, the Go vernor prayed for the 
+suspension  of the impugned judgment as an interim relief, which was 
+however not granted by the Division Bench , and f or the implementation 
+of the judgmen t of the Single Bench, PTI filed a contempt petition , 
+which is also pending adjudication .  
+                                                             
+12 Planned Parenthood v. Casey (1992) 505 U.S. 833.  
+13 W.P. No. 5851 of 2023.  SMC No.1/2023, etc  4 
+ 
+Suo motu proceedings and constitution petitions in this Court  
+5.  Meanwhile, on 16.02.2023 a two -member B ench of this 
+Court while hearing a service matter of a civil servant,14 surprisingly 
+apprehended delay in the holding of the  general election to the  
+Provincial Assembly  of Punjab and took suo motu  notice of the matter , 
+with the following observations:  
+7. We  note that the Provincial Assembly of Punjab stood dissolved on 
+14.01.2023 pursuant to the Advice of the Chief Minister, Punjab dated 
+12.01.2023. As such, elections to the Punjab Provincial Assembly are 
+required to be held within 90 days of the said date i n terms of Article 
+224(2) of the Constitution. However, no progress appears to have taken 
+place in this regard and there is a real and eminent danger of violation 
+of a clear and unambiguous constitutional command.    
+The Hon’ble Memb ers of the said Bench expressed their view on the 
+matter and referred the same to the Hon’ble Chief Justice of Pakistan to 
+invoke the suo motu  jurisdiction of this Court under Article 184(3) of the 
+Constitution, thus:  
+8……….. We are, however, of the view tha t the matter brought to our 
+notice during these proceedings raises a serious question of public 
+importance with reference to enforcement of Fundamental Rights 
+conferred by Chapter -1 of Part -II of the Constitution. Considering the 
+fact that unless timely st eps are taken to remedy the situation, there is 
+an eminent danger of violation of the Constitution which we are under a 
+constitutional, legal and moral duty to defend. We therefore consider it 
+a fit case to refer to the Hon’ble CJP to invoke the suo motu  jurisdiction  
+of this Court under Article 184(3) of the Constitution, who may if he 
+considers appropriate after invoking jurisdiction under the said Article 
+constitute a Bench to take up the matter. Let the office place this file 
+before the Hon’ble CJP for a ppropriate orders.  
+After two days, o n 18.02.2023 , Mr. Muhammad Sibtain Khan, the 
+Speaker of th e Provincial Assembly of Punjab  (a member of PTI before 
+his election as Speaker) and some prominent members of PTI, like Mian 
+Mahmood ur Rashid etc., filed Consti tution Petition No.2 of 2023 in this 
+Court under Article 184(3) of the Constitution, agitating the same 
+grievance as recorded in the order of the two -member Bench. The 
+Speaker of t he Provincial Assembly of Kh yber Pakhtunkhwa also joined 
+in Constitution Petition No.2 of 2023 for agitating the grievance as to 
+not appointing the date of the election by the Governor of the Province  
+of Khyber Pakhtunkhwa . It may  also be pertinent to mention here that 
+earlier to the sa id suo motu  notice taken by the two -member Bench, the 
+President of the Islamabad High Court Bar Association had also filed 
+Constitution Petition No.1 of 2023 in this Court under Article 184(3) of 
+the Constitution on the same matter, on 09.02.2023, but the same had 
+not been fixed for hearing till then.  
+                                                             
+14 Order dated 16.02.2023 passed in C.P No.3988 of 2022 titled Ghulam Mehmood Dogar  v. Federation 
+of Pakistan, citation 2023 SCP 59 at the official website of this Court.  SMC No.1/2023, etc  5 
+ 
+6.  Upon the recommendation of the two -member Bench, the 
+Hon’ble Chief Justice of Pakistan  invoke d the suo motu  jurisdiction of 
+this Court under Article 184(3) of the Constitution , by  his 
+admini strative order dated 22.02.2023 ,15 and constitute d a nine -
+member  Bench to consider the questions of law framed therein; his 
+lordship  also fixed the connected Constitution Petitions No.1 and 2 of 
+2023 for hearing before th e nine-member Bench.   
+Our reservations on the invocation of suo motu jurisdiction and 
+constitution of the Bench  
+7.  We had serious reservations on the mode and manner how 
+the original jurisdiction of this Court under Article 184(3) was invoked 
+suo motu  in the present matter as well as on the constitu tion of the 
+nine-member Bench, which we expressed in our orders dated 
+23.02.202316 and the details thereof need not be reiterat ed here. Our 
+reservations  were regarding the administrative decision  of the Hon’ble 
+Chief Justice invoking the suo motu  jurisdiction in the matter , after 
+having noticed the mode  and manner in which the issue arose  out of an 
+unrelated  service matter of a civil servant being heard by a two -member 
+Bench , nuanced by the surfacing of audio leaks involving one of the 
+Hon’ble Judges  of that two -member Bench  and thereafter the 
+constituti on of the nine -member  Bench that includ ed the said two 
+Hon’ble Judges . It is clarified that the actual sitting of the said two 
+Hon’ble Judges on the Bench or their recusal from the Bench is of little 
+concern  to us , as it is a matter between the Judges and their 
+conscience , only to be adjudged  by history. Our reservations, however, 
+remain to the extent of the administrative powers exercised by the 
+Hon’ble Chief Justice and have been  elaborated upon later in the 
+judgment.     
+Decision by two Hon’ble Judges and r ecusal by two Hon’ble Judges and 
+further hearing by the remaining five Judges  
+8.  On the first date of hearing, i.e., 23.02.2023, at the very 
+outset one of us ( Jamal Khan Mandokhail, J. )  read a note in Court 
+expressing his opinion that the present suo motu  proceedings were not 
+justified. T wo Hon’ble Judges of the nine -member Bench ( Yahya Afridi 
+and Athar Minallah, JJ. ) dismissed the suo motu  proceedings as well as 
+                                                             
+15 Administrative order dated 22.02.2023 of HCJP in S.M.C. No.1 of 2023, citation 2023 SCP 64 at the 
+official website of this Court..  
+16 Order dated 23.02.2023 passed in S.M.C. No.1/2023, citation 2023 SCP 68 at the official website of 
+this Court.  SMC No.1/2023, etc  6 
+ 
+the conn ected constitution petitions, by their orders dated 23.02.2023,1 
+inter alia  holding:  
+While the jurisdiction of this Court under Article 184(3) of the 
+Constitution is an independent original jurisdiction that is not affected 
+by the pendency of any matter on  the same subject matter before any 
+other court or forum, the decision already rendered by the Lahore High 
+Court in Writ Petition No.6093/2023, pending challenge in Intra -Court 
+Appeal No.11096 of 2023, and the peculiarly charged and unflinching 
+contested p olitical stances taken by the parties, warrant this Court to 
+show judicial restraint to bolster the principle of propriety. This is to 
+avoid any adverse reflection on this Court’s judicial pre -emptive 
+eagerness to decide.  
+On the second date of hearing, i.e ., 24.02.2023, an application was filed 
+by three political parties, namely, Pakistan Muslim League (N), Pakistan 
+Peoples’ Party and Jamiat Ulema -e-Islam, reques ting that the two 
+Hon’ble Judges  of the nine -member Bench ( Ijaz ul Ahsan and Sayyed 
+Mazahar Ali Akbar Naqvi, JJ. ) may recuse themselves from hearing this 
+case, for the reasons stated in the said application. Taking stock of the 
+situation, the Hon’ble  Chief J ustice called a meeting of the Judges of 
+the nine -member B ench, which took place on 27.02.2023 .  
+9.   In the meeting , the two Hon’ble Judges ( Ijaz ul Ahsan and 
+Sayyed Mazahar Ali Akbar Naqvi, JJ. ) after deliber ations decided to 
+recus e themse lves from the Bench. I t was also considered  that the  two 
+Hon’ble Judges ( Yahya Afridi and Athar Minallah, JJ. ), who had already 
+made and announced their final decision of dismissing the constitution 
+petitions and the suo motu  proceedings  on 23.02.2023  and had in the ir 
+order left it to the  Hon’ble Chief Justice to decide if they were required 
+to sit through the r emaining proceedings  in the following words – 
+“However, I leave it to the Worthy Chief Justice to decide my retention 
+in the present benc h hearing the said petitions.” Therefore, a Bench 
+comprising t he remaining five Judge s of the nine -member Bench was 
+reconstituted by the Hon’ble Chief Justice , to simply further hear the 
+case and no specific order was passed to exclude the two Hon’ble 
+Judges.    
+10.  In the said backdrop, the rema ining  five members of the 
+Bench heard the arguments of the learned counsel for the parties to the 
+constitution petitions as well as the other major political parties 
+including Pakistan Muslim League (N), Pakistan Peoples ’ Party and 
+Jamiat Ulema -e-Islam, and examined  the record of the cas e. SMC No.1/2023, etc  7 
+ 
+Scope of jurisdiction of this Court under Article 184(3) during pendency of 
+the same matter before the High Courts  
+11.  As the constitutional petitions involving the same matter 
+are pending adjudication  before the  respective High Courts, we think it 
+appropriate to first take up the question regarding the scope of 
+jurisdiction of this Court under Article 184(3) of the Constitution during 
+pendency of the same matter before the High Courts .  
+12.  After the coming into  force of the Constitution in 1973, it 
+did not tak e much time that the question as to  the nature and scope of 
+the original jurisdiction conferred on this Court under Article 184(3) , 
+came fo r consideration before this  Court in Manzoor Elahi17. The Court 
+not only elaborated the mea ning and scope of the phrase  “question of 
+public importance with reference to the enforcement of any of the 
+Fundamental Rights” as used in Article 184(3) but also explained the 
+different contours of this jurisdiction, which so far as  are relevant for 
+the present case may be stated briefly as follows.  
+13.  The original jurisdiction of this Court under Article 184(3) 
+is an “extraordinary” jurisdiction , which is to be exercised “with 
+circumspection”. It confers the “enabling powers”, and  the Court is not 
+bound to exercise them even where the case brought before it involves a 
+question of public importance with reference to the enforcement of any 
+of the Fundamental Rights. Before exercising this extraordinary 
+jurisdiction, the Court is to s ee whether the facts and circumstances of 
+the case justify the exercise of it and whether the case is “fit” for being 
+dealt with by the Court under this jurisdiction. As the jurisdiction of 
+this Court under Article 184(3) is concurrent with that of the Hig h 
+Courts under Article 199, if the jurisdiction of any of the High Courts 
+has already been invoked under Article 199 and the matter is pending 
+adjudication, then the two well -established principles are also to be 
+considered before exercising its jurisdicti on under Article 184(3) by this 
+Court: First, where two courts have concurrent jurisdiction and a 
+petitioner elects to invoke the jurisdiction of one of the courts then he is 
+bound by his choice of forum and must pursue his remedy in that 
+court; and second , if one of the courts having such concurrent 
+jurisdiction happens to be a superior court to which an appeal lies from 
+the other court of concurrent jurisdiction then the superior court 
+                                                             
+17 Manzoor Elahi  v. Federation of Pakistan PLD 1975 SC 66.  SMC No.1/2023, etc  8 
+ 
+should not normally entertain such a petition after a similar petition  on 
+the same facts has already been filed and is pending adjudication in the 
+lower court, otherwise it would deprive one of the parties, of his right of 
+appeal. Even where no similar petition on the same facts has already 
+been filed in any of the High Cour ts, this Court can decline to exercise 
+its extraordinary jurisdiction if it finds that sufficient justification has 
+not been shown for bypassing, and not invoking , the concurrent 
+jurisdiction of the High Court concerned.  
+14.        We may  add a third principle, i.e. , the principle of forum 
+non conveniens  (inconvenient forum),  which can  also be useful ly 
+considered by this Court while deciding upon its discretion to exercise 
+or not to exercise  its jurisdiction under Article 184(3)  in a particular 
+matter . This principle of forum non conveniens  is a legal doctrine in 
+common law jurisdictions that allows a court to decline jurisdiction over 
+a case if it determines that another court would be more appropriate or 
+convenient for the parties involved. This principle aims to promote 
+fairness and effic iency in the judicial system by ensuring that cases are 
+heard in the most suitable venue.  In other words, when  a court is 
+satisfied that ther e is some other court  having the competent 
+jurisdiction  in which the case may be heard and decided  more suitably 
+for the interests of all the parties and the ends of justice, t his principle 
+allows it to decline the exercise of its jurisdiction despite having the 
+same .18 This principle is generally applied in matters where courts of 
+two or more countries have concurrent jurisdiction, and the court 
+whose jurisdiction is invoked by one of the parties, is of the view that a 
+court in another jurisdiction is more suitable to adjudicate the case and 
+thus waives its jurisdiction over the case . The rationale of this principle 
+can, however,  be applied by the courts of concurrent jurisdiction that 
+are situated in one and the same country  also. Given  this principle, this 
+Court if, after considering the convenience of the parties and the nature 
+of the matter involved, finds that the case may be heard and decided 
+more suitably by a High Court under Article 199 of the Constitution, it 
+may decline to exercise its jurisdiction  under Article 184(3) of the 
+Constitution.   
+15.  The scope of original jurisdiction of the Court was again 
+examined by an 11 -Member Full Court Bench of this Court in Benazir 
+                                                             
+18 Dicey, Morris & Collins, The Conflict of Laws,  (16th ed. 2022) Vol - 1, Ch -12. SMC No.1/2023, etc  9 
+ 
+Bhutto19. The Court, in that case,  considered and further explained the 
+principles enunciated in Manzoor Elahi  in regard to th e exercise of this 
+jurisdiction.  No principle enunciated in  Manzoor Elahi  was dissent ed to 
+or overruled.  The Court simply found it proper to exercise its original 
+jurisdiction under Article 184(3) in  the facts and circumstances of the 
+case before it.  
+16.  In Benazir Bhutto , the Court endorsed the principle 
+enunciated in Manzoor Elahi , that in matters of concurrent jurisdiction , 
+the lower court should normally be approached in the first instance, by 
+holding that it is no doubt correct that ordinarily  the forum of the court 
+in the lower hierarchy should be invoked but the principle is not 
+inviolable and there may be genuine exceptions  to it, such as the case 
+before it where there had been a denial of justice as a result of the 
+proceedings before the Hi gh Court s being dilatory  and when the High 
+Court s had not exercised its judicial power in the matter by making an 
+order admitting the petitions for regular hearing and were thus not 
+seized of the dispute. The Court also cautioned that the applicability of 
+this prin ciple is to be judged in the light of the particular facts and 
+circumstances of each case, as there can be an abuse of this principle if 
+there is an indiscriminate filing of petitions by persons motivated to 
+stultify the exercise of judicial power under Ar ticle 184(3) of the 
+Constitution. T he Court explained  that the petitioner before it was not 
+bound by the choice of the forum made by another person who had filed 
+a similar petition in a High Court in his individual capacity without 
+there being any authoris ation from the petitioner, the co -chairperson of 
+the aggrieved political p arty, and  held that the element of "common 
+interest" of the two petitioners would strike at the choice of selecting the 
+forum only when there is a proof to elicit a common design bet ween 
+them . The Court finally held that the facts of Manzoor Elahi  and that of 
+the petition before it were distinguishable , and thus proceeded to 
+exercise its jurisdiction under Article 184(3) of the Constitution, without 
+superseding in any manner the princ iples enunciated in Manzoor Elahi . 
+Nor any other judgment of this Court has come or brought to our 
+notice, which has overruled the principles enunciated in  Manzoor Elahi . 
+Thus, the principles enunciated in  Manzoor Elahi  and explained in  
+Benazir Bhutto  as to the nature and scope of the original jurisdiction of 
+this Court under Article 184(3) of the Constitution is the law of the land 
+                                                             
+19 Benazir Bhutto v. Federation of Pakist an PLD 1988 SC 416.  SMC No.1/2023, etc  10 
+ 
+till today, which should therefore be applied and followed by this Court 
+unless a Bench of this Court larger than an 11 -member Bench 
+overrules the same.  
+17.  Given the above  legal position, this Court declined to 
+exercise its jurisdiction under Art icle 184(3) of the Constitution in a 
+later case of Farough Siddiqi,20  after considering the  case of Benazir 
+Bhutto , and held that it  saw no reason whatsoever to deprive the High 
+Court, of hearing the identical petition which was pending there , 
+particularly when the facts and questions of law are same and when no 
+dilatory tactics had been adopted in the High Court. The Court held  
+that in the circumstances of the case, the direct petition before it under 
+Article 184(3) was not maintainable on the ground that on the same 
+subject -matter , a petition under Article 199 was pending in the Sindh 
+High Court and dismissed the petition under  Article 184(3) with the 
+observation that the High Court would take up the petition under 
+Article 199 pending before it for hearing in the first week after vacation. 
+Similarly, in Wukala Mahaz21 this Court reiterated that there is no 
+doubt that the Court ca nnot, as a  matter of course, entertain a 
+constitution p etition under Article 184(3) of the Constitution and allow 
+a party to bypass a High Court which has jurisdiction under Article 199 
+of the Constitution, inter alia , to enforce the Fundamental Rights und er 
+clause (2) thereof, and that the Court should be discreet in selecting 
+cases for entertaining under Article 184(3) of the Constitution.  
+18.  In the light of the above principles enunciated in Manzoor 
+Elahi  and explained in Benazir Bhutto , when we examine the facts and 
+circumstances of the present case, we find that the writ petitions filed 
+in the Lahore High Court by PTI and others cannot be said to have been 
+filed to “stultify” the exercise of original jurisdiction by this Court under 
+Article 184(3) nor is there any inordinate delay in the proceedings being 
+conducted in that High Court, which could have justified the exercise of 
+extraordinary jurisdiction by this Court under Article 184(3). The delay, 
+if any, has in fact been caused by th e present  proceedings  and, as 
+observed by Justice Anwarul Haq in  Manzoor Elahi   that the  “High 
+Court …would have proceeded to examine the allegations …, if the matter 
+had not been brou ght to this Court ”, we find that  the Division Bench of 
+the Lahore High Court would have decided the ICAs pending before it  
+                                                             
+20 Farough Siddiqi v. Province of Sindh 1994 SCMR 2111.  
+21 Wukala Mahaz v. Federation of Pakistan  PLD 1998 SC 1263 (7 -MB) SMC No.1/2023, etc  11 
+ 
+and the Peshawar High Court would have decided the writ petition 
+pending before it  if the present proceedings had not been taken up by 
+this Court. Further, we find t he principle of choice of forum, as 
+enunciated in  Manzoor Elahi  and explained in  Benazir Bhutto , is also  
+applicable to the present case  as the writ petitions filed by PTI and 
+others in the Lahore High Court and the constitution petitions, 
+particularly C.P.  No.2 of 2023 filed in this Court  by the Speaker of the 
+Provincial Assembly of Punjab and others, involve the element of 
+"common interest" of the petitioners.  We are , therefore , of the opinion 
+that in view of the prin ciples settled in Manzoor Ilahi  and Benzair 
+Bhutto , the present suo motu  proceedings and the connected 
+constitution  petitions  do not constitute a fit case to exercise the 
+extraordinary original  jurisdiction of this Court under Article 184(3) of 
+the Constituti on. 
+High Court judgment already i n the field – how can original jurisdiction 
+under Article 184(3) be exercised against  a judicial pronouncement  of a 
+High Court, directly or indirectly  
+19.  As aforementioned, the question of law involved in the 
+present matter, is: who has the constitutional power and duty to 
+appoint a date for the holding of a general election to a Provincial 
+Assembly that stands dissolved under the second part of clause (1) of 
+Article 112 of the Constitution, at the expiration of forty -eight hours 
+after the Chief Minister has advised the Governor to dissolve the 
+Assembly but the Governor has not made any express order thereon? 
+And, this question has already been decided by  a Single B ench of the 
+Lahore H igh Court  in the exercise of its constitutional jurisdiction 
+under Article 199 of the Constitution  by its judgment dated 10.02.2023, 
+which judgment having not been set aside or suspended by any higher 
+forum is in the field and is thus fully operative and binding on t he 
+parties to the writ petitions wherein the same was passed.  
+20.  In view of the above position, the question as to the 
+maintainability of the present suo motu  proceedings  and constitution 
+petitions, falls for our determination:  whether this Court in the exercise 
+of its original jurisdiction under Article  184(3) of the Constitution has  
+the power to make an order of the nature mentioned in Article 199 of 
+the Constitution  against a judicial order of a High Court , directly or 
+indirectly .  SMC No.1/2023, etc  12 
+ 
+21.  We are aware of  certain judgments22 of this Court wherein 
+this Court has exercised its jurisdiction under Article 184(3) of the 
+Constitution, in the peculiar facts and circumstances of the cases, 
+notwithstanding  the pendency of writ petitions under Article 199 of the 
+Cons titution before the High Courts, but we could not lay our hands on 
+any judgment wherein this Court has specifically taken up and decided 
+the said question , and exercised its j urisdiction under Article 184(3)  of 
+the Constitution despi te there being a judgment of a  High Court passed 
+under Article 199 of the Constitution in the matter taken up by this 
+Court . The present case, therefore, appears to be one of first 
+impression. And, b efore delving into the said question, we find it 
+appropriate to reproduce here the relevant p rovisions of Article 199 and 
+Article 184 of the Constitution for ease of reference:  
+199. Jurisdiction of High Court  
+(1) Subject to the Constitution, a High Court may, if it is satisfied that 
+no other adequate remedy is provided by law : 
+(a)   …………………………………………………………………………..  
+(b)   …………………………………………………………………………..  
+(c)  on the application of any aggrieved person , make an order 
+giving such directions to any person or authority, including any 
+Government exercising any power or performing any func tion in, 
+or in relation to, any territory within the jurisdiction of that 
+Court as may be appropriate for the enforcement of any of the 
+Fundamental Rights conferred by Chapter 1 of Part II . 
+(5) In this Article, unless  the context otherwise requires: - 
+"person" includes any body politic or corporate, any authority of 
+or under the control of the Federal Government or of a 
+Provincial Government, and any Court or tribunal, other than 
+the Supreme Court, a High Court  or a Court or tribunal 
+established under a  law relating to the Armed Forces of 
+Pakistan;  
+184. Original Jurisdiction of Supreme Court.  
+(1) 
+………………………………………………………………………………………….  
+(2) 
+………………………………………………………………………………………….  
+(3) Without prejudice to the provisions of Article 199, the Supreme 
+Court shall, if it considers that a question of public importance  with 
+reference to the enforcement of any of the Fundamental Rights 
+conferred by Chapter I of Part II  is involved have the power to make an 
+order of the nature mentioned in the said Article . 
+(Emphasis added)  
+From the bare reading of the above -cited provisions of Articles 199(1)(c) 
+and 184(3) of the Constitution, i t is evident that the jurisdiction of a 
+High Court under Article 199(1)(c) and that of this Court under Article 
+184(3) of the Constitution are concu rrent, in so far as  they relate to the 
+                                                             
+22 Benazir Bhutto v. Federation of Pakistan PLD 1988 SC 416; Nawaz Sharif v. President of Pakistan 
+PLD 1993 SC 473.  SMC No.1/2023, etc  13 
+ 
+enforcement of any of the Fundamental  Rights conferred by Chapter I of 
+Part II  of the Constitution.  
+22.  Article 184(3) of the Constitution empowers this Court “to 
+make an order of the nature mentioned in the said Article”, i.e., Article 
+199, and as per clause (5) of Article 199 a High Court and this Court 
+are excluded from the definition of the term “person”  to whom any order  
+or direction  can be made , or whose any act or proceeding can be 
+declared to have been done or taken without lawful authority,  in the 
+exercise of jurisdiction under Article 199. Thus, a petition under Article 
+199 of the Constitution is no t maintainable before a High Court , nor 
+can an y order , direction  or declaration under the Article  be made, 
+against itself or any other  High Court or this Court , or in regard to any 
+act done or proceeding taken by such Courts . The bar creat ed by clause 
+(5) of Article 199, which affects the jurisdiction of the High Courts 
+conferred under that Article, being a substantive provision is also 
+applicable to the exercise of its jurisdiction by this Court under Article 
+184(3) of the Constitution.  Therefore , neither a High Court nor this 
+Court can exercise its respective jurisdiction under Article s 199 and 
+184(3), against a High Court or this Court  or against any act or 
+proceeding of a High Court or this Court . We are fortified in our this 
+view by the following  opinio n of a five -member Bench of this Court 
+delivered in Ikram Chaudhry :23 
+5. We tried to impress upon them that the above facts would not 
+attract  Article 184(3) of the Constitution if otherwise the aforesaid 
+petitions are not sustainable in view of well -settled proposition of law; 
+firstly, that a Bench of this Court cannot sit as a Court of Appeal over 
+an order or a judgment of another Bench of this  Court and, secondly, 
+Article 184(3) confers jurisdiction on this Court of the nature contained 
+in Article 199 of the Constitution, clause (5) of which excludes inter alia 
+the Supreme Court and the High Courts.  In other words, no writ can be 
+issued by a Hi gh Court or the Supreme Court against itself or against 
+each other  or its Judges in exercise of jurisdiction under Article 199 of 
+the Constitution, subject to two exceptions, namely, (i) where a High 
+Court Judge or a Supreme Court Judge acts as persona des ignata  or as 
+a Tribunal or (ii) where a quo warranto  is prayed for and a case is made 
+out. 
+(Emphsis added)  
+Because of the above legal position, a seven -member Bench of this 
+Court has categorically and firmly held in Shabbar Raza24 that a 
+judgment or an order of this Court “can never be challenged by virtue of 
+                                                             
+23 Ikram Chaudhry v. Federation of Pakistan  PLD 1998 SC 103 (5 -MB) Almost all important previous 
+cases are cited in it. See also Naresh Mirajkar v. State of Maharashtra AIR 1967 SC 1 (9 -MB).  
+24 Shabbar Raza  v. Federation of Pakistan  2018 SCMR 514.  SMC No.1/2023, etc  14 
+ 
+filing independent proceedings under Arti cle 184(3) of the Constitution”; 
+such course  is “absolutely impermissible”.  
+23.  There is another legal aspect of the matter , which b ars the 
+interference by this Court with any judgment, decree or order of a High 
+Court, in its jurisdiction under Art icle 184(3) of the Constitution . The 
+jurisdiction  conferred on  this Court under Article 184 is its original 
+jurisdiction, as mentioned in the title of this Article, in contrast to its 
+appellate jurisdiction under A rticle 185 of the Constitution, which 
+denotes that this Court is to exercise it in a matter that has not  already 
+been heard and decided by a High Court.25 This Court can examine the 
+legality of any judgment, decree or order passed by a High Court and 
+can set it a side, if the same is found to have been passed otherwise 
+than in accordance with law, only in the exercise of its appellate 
+jurisdiction conferred on it under Article 185 of the Constitution or by 
+or under any law  and not in the exercise of its original jurisdiction 
+under Article 184(3) of the Constitution . 
+24.  A similar view has been pronounced by th e Indian Supreme 
+Court  in Naresh Mirajkar26 and Daryao27 in the context of its original 
+writ jurisdiction under Article 32 of the Indian Constitution, which 
+jurisdiction  is similar to that of this Court under Article 184(3) of our 
+Constitution. A nine -member Bench of the Indian Supreme Court held 
+in Naresh Mirajkar  that the correctness of a judicial order passed by a 
+High Court can be challenged only by appeal and not by writ 
+proceedings before it under Article 32 of the Indian Constitution . And in 
+Daryao , a five -member Bench held that an original petition for a writ 
+under Article 32 of the Indian Constitution cannot take the place of an 
+appeal against an order passed by a High Court under Article 226 of the 
+Indian Constitution (which is sim ilar to Article 199 of our Constitution) , 
+and that there can be little doubt that the jurisdiction of the Court to 
+entertain applications under Article 32 , which are original , cannot be 
+confused or mistaken or used for the appellate jurisdiction of this Co urt 
+which alone can be invoked for correcting errors in the decisions of the 
+High Courts pronounced in writ petitions under Article 226 of the 
+Indian Constitution.  
+                                                             
+25 H.R.C. N o.18877 of 2018  PLD 2019 SC 645 (Majority view).  
+26 Naresh Mirajkar v. State of Maharashtra AIR 1967 SC 1 (9 -MB).  
+27 Daryao v. State of U.P. AIR 1961 SC 1457  (5-MB). SMC No.1/2023, etc  15 
+ 
+25.  It is a well -settled principle of law that what cannot be done 
+"per directum ” (directly)  is not permissible to be done “ per obliquum " 
+(indirectly) .28 When anything is prohibited, everything by which it is 
+reached is prohibited also ( quando aliquid prohibetur, prohibetur et omne 
+per quod devinetur ad illud ). Article 175(2) of the C onstitution  
+unequivocally declares that no court shall have any jurisdiction save as 
+is or may be conferred on it by the Constitution or by or under any law. 
+No court, including this Court, can evade this constitutional command 
+by indirect or circuitous means . Thus, when a High Court or this Court 
+cannot directly entertain a constitution petition under Article 199 or 
+Article 184(3) of the Constitution against itself or each other  or against 
+any act done or proceeding taken by them , either of them cannot do it 
+indirectly or  impli edly by giving a decision contrary to the decision 
+already given by  any of them on the same facts  and in the same matter , 
+in the exercise of their respective jurisdiction under the said Articles. 
+We can, therefore, safely conclude t hat this Court in the exercise of its 
+original jurisdiction under Article 184(3) of the Constitution does not 
+have the power to make an order of the nature mentioned in Article 199 
+of the Constitution   against a judicial order of a High Court , direct ly or 
+indirectly . Hence, the present suo motu  proceedings initiated, and the 
+connected constitution petitions filed, under Article 184(3) of the 
+Constitution are not maintainable in view of the constitutional bar of 
+Article 199(5) read with Article 175(2) of the Constitution , in so far as 
+they relate  to the matter already decided by the Single Bench of the 
+Lahore High Court in exercise of its jurisdiction  under Article 199 of the 
+Constitution . 
+Applicability of res judicata to a decision of a High Court made under 
+Article 199  
+26.  We have pondered upon this aspect also, that if this Court 
+decides  upon the question of law  involved in the present matter  against  
+that what has been decided by the Single Bench of the Lahore High 
+Court  without setting aside that decision, which decision t he ECP would 
+be bound to obey and comply with.  At first blush, it appears that it 
+would be the decision of this Court , in view of Article 201 of the 
+Constitution which is subject to Article 189 and the provisions of the 
+latter Article that make the decisio n of this Court binding on all other 
+                                                             
+28 Abdul Baqi  v. Govt. of Pakistan PLD 1968 SC 313; Nawaz Sharif  v. President of Pakistan PLD  1993 
+SC 473; Hanif Abbasi  v. Imran Khan PLD 2018 SC 189.  SMC No.1/2023, etc  16 
+ 
+courts of the country . However, when such a position is examined 
+profoundly, it presents a serious le gal problem in the said answer 
+because  of the  difference between the doctrine  of stare decisis  
+incorporated in Article s 189 and 201 of the Constitution and the 
+doctrine of res judicata  codified in Section 11 of the Code of Civil 
+Procedure 1908 . Fortunately, we need not dive deep and do labour for 
+explaining the diffe rence between the two doctrines  as this Court, while 
+dealing with and rejecting the contention that the bar of  res judicata  is 
+not attracted  to a decision on a question of law,  has already elaborated 
+these doctrines  and explained the difference between them  in Pir 
+Bakhsh,29 which we can advantageously state here in brief .   
+27.  “Stare decisis”  and “res judicata”  both are Latin terms; 
+stare decisis  literally means to stand by a decision and res judicata, a 
+matter adjudged.  The core distinction between the two doctrines lies in 
+what a case decides generally and what it decides between the parties to 
+that case.  What a  case decides generally is the  ratio decidendi  (rationale 
+for the decision) or the  rule of law on which the  decision is based, for 
+which it stands as a precedent and is to be applied and followed in the 
+later cases by virtue of the doctrine of stare decisis ; and what it deci des 
+between the parties is  far more than this , which includes the decision 
+on both issues of law and issues of facts arisen in the case as well as 
+the adjudication on the contested claims of the parties , and the parties 
+and their privies are bound by that decision and adjudication  because 
+of the doctrine of res judic ata. Stare de cisis is based upon the legal 
+principle or rule involved in a prior case and not upon the adjudication 
+which resulted therefrom, whereas  res judicata  is mainly based  upon  
+the adjudication . Res judicata  applies only when the same parties, or 
+their privies, are involved in the subsequent case as were involved in 
+the prior case, the applicability  of stare  decisis  is not affected by the fact 
+that the parties to the subsequent case were not involved in the prior 
+case wherein the question of law was decided.  The basis of the doctrine 
+of stare decisis  is the need to promote certainty, stability and 
+predictability of the law while that of the doctrine of res judicata is the 
+need to have an end of the litigation over a dispute between the parties. 
+Stare decisis is, thus, applicable only to questions of law ; res judicata  
+applies to decisions on both questions of law and  fact. Res judicata is 
+strictly applicable even where the decision on the questions of law or 
+                                                             
+29 Pir Bakhsh v. Chairman, Allotment Committee  PLD 1987 SC 145.  SMC No.1/2023, etc  17 
+ 
+fact and the consequent adjudication on the respective claims of the 
+parties were erroneous, whereas stare decisis has a certain flexibility 
+and does not prevent a court from overrul ing its prior decision if, upon 
+re-examination thereof, it is convinced that the decision was erroneous.  
+28.  In view of the above exposition of the difference in the scope 
+and applicability of the doctrines of stare decisis  and res judicata , we 
+are of the  considered opinion that the judgment of the Single B ench of 
+the Lahore High Court , if it is not set aside in the ICAs pending before 
+the Division Bench of that High Court or in an appeal filed by any of the 
+parties  to the case or any other aggrieved person before this Court 
+under Article 185 of the Constitution, would remain binding on the ECP 
+and the Governor of Punjab by virtue of the doctrine of res judicata , 
+notwithstanding any decision of this Court contrary to that of  the Single 
+Bench of the Lahore High Court. And such a situation, instead of 
+resolving the question of law, would create more constitutional and 
+legal anomalies.  Therefore, on this ground also, we find it not a fit case 
+to exercise the jurisdiction of this  Court under Article 184(3) of the 
+Constitution.  That is why a five -member Bench of the Indian Supreme 
+Court has held in Daryao30 that the general rule of res judicata  applies 
+to writ proceedings  before it under Article 32 of the Indian Constitution  
+(which is similar to Article 184(3) of our Constitution) , and  if a writ 
+petition filed by a party under Article 226 of the Indian Constitution 
+(which is similar to Article 199 of our Constitution) has been dismissed 
+on the merits by a High Court, the judg ment thus pronounced is 
+binding between the parties, which cannot be “circumvented or by -
+passed ” by taking recourse to Article 32 of the Indian Constitution . We 
+agree with and adopt this view, in holding that a judgment pronounced 
+by a High Court in the ex ercise of its jurisdiction under Article 199 of 
+the Constitution cannot be “circumvented or by -passed” by taking 
+recourse to Article 184(3) of the Constitution , on the constitution 
+petitions filed by the litigants or suo motu  by the Court.  
+Federalism - Judicial propriety in allowing the High Courts of the 
+respective Provinces to decide upon matter s that relate to those Provinces 
+only  
+29.  Pakistan is a federal republic and its Constitution is a 
+federal constitution.  The preamble of the  Constitution states that the 
+                                                             
+30 Daryao v. State of U.P. AIR 1961 SC 1457.  SMC No.1/2023, etc  18 
+ 
+territories included in or in accession with Pakistan shall form a 
+Federation wherein the units will be autonomous with such boundaries 
+and limitations on their powers and authority as may be prescribed, 
+and Article 1 of the C onstitution declares that Pakistan shall be Federal 
+Republic  to be known as the Islamic Republic of Pakistan . ‘The 
+commonly accepted features of a federal constitution are: (i) existence of  
+two levels of government;  a general [fed eral] government for the w hole 
+country and two or more regional  [provincial]  governments for different 
+regions within that country; (ii) dist ribution of competence or power - 
+legislature, exec utive, judicial, and financial - between the general  
+[federal]  and the regional  [provincial]  governments; (iii) supremacy of the 
+constitution - that is, the foregoing arrangements are not only 
+incorporated in the constitution but they are also beyond the reach of 
+either government to the extent that neither of them can unilaterally 
+change nor breach them; (iv) dispute resolution mechanism for 
+determining the competence of the two governments for exercising any 
+power or for performing any function. ’31 Federalism is, thus, based 
+upon the division of powers  between the federation and its federating 
+units , where both of them are independent and autonomous in their 
+own domains . 
+30.        Federalism under our  Constitution , therefore, also  
+envisages independent federating units with the autonomous 
+legislature, executive and judiciary. Chapter 1 of Part V of the 
+Constitution provides for the distribution of legislative power between 
+the Federation and the Provinces. Chapter 2 of the same Part deals with 
+the distribution of executive power between the Federation and the 
+Provinces. Chapters 1 to 3 of P art VII of the Constitution deal with the 
+Judicature; they provide  a separate High Court for each Province  with 
+its jurisdiction limited to the territory of that Province  and a Supreme 
+Court for the whole country  with an overarching jurisdiction . The 
+jurisdictional limits  between the co-ordinate High Courts on the basis of 
+territory and the overarching jurisdiction of the Supreme Court , form 
+the construct of  judicial federalism. It also fosters diversity in legal 
+interpretations and allows for experimentation in legal and policy 
+solutions first at the provincial  level.  
+                                                             
+31 The Oxford Handbook of Indian Constitution  (Sujit Choudhry et al., ed., 2016) Chapter 25 on Federal 
+Scheme.  SMC No.1/2023, etc  19 
+ 
+31.  The core principle of federalism is provincial autonomy , 
+which means the autonomy and autonomous functioning  of the 
+provincial legislative, executive and judicial institutions. The federal 
+institutions must abide by  this principle in federalism . Under our 
+Constitution, a  High Court of a Province is the highest constitutional 
+court of that Province and is conferr ed with the jurisdiction under 
+Article 199 of the Constitution to judicially review the acts and 
+proceedings of all persons performing , within its territorial jurisdiction,  
+functions in connection with the affairs of the Federation, a Province or 
+a local authority. The principle  of provincial  autonomy requires that 
+when a matter which relates only to a Province, and not to the 
+Federation or to more than one Provinces, the Hig h Court of that 
+Province should ordinarily be allowed to exercise its constitutional 
+jurisdiction to decide upon that matter, and this Court should not 
+normally interfere with and exercise its jurisdiction in such a matter 
+under Article 184(3) of the Const itution, which jurisdiction is primarily 
+federal in character. The federal structure of our Constitution 
+necessitates  that the autonomy and independence of the apex provincial 
+constitutional court of a Province, should not be readily interfered  with 
+by thi s Court but rather be supported to strengthen the provincial 
+autonomy and avoid  undermining the autonomy of the provincial 
+constitutional courts.   
+Parliament is the best forum  and political dialogue is the best way to 
+resolve political issu es 
+32.  By the present suo motu  proceedings and the connected  
+constitution petitions, this Court has been ushered into a “political  
+thicket ”, which commenced  last year with the dissolution of the 
+National Assembly of Pakistan32 and reached the dissolution of the 
+Provincial  Assemblies of two Provinces  this year  after passing through 
+the disputes over the matters of counting of votes of defected members 
+of political parties33 and election to the office of the Chief Minister of a 
+Province,34 and that too,  in the exerci se of its original jurisdiction under 
+Article 184(3) of the Constitution .   
+33.   Where the  political parties and the people subscribing to 
+their views are sharply divided, and their difference of opinion has 
+                                                             
+32 S.M.C. No.1 of 2022   PLD 2022 SC 574.  
+33 Supreme Court Bar Association v. Federation of Pakistan PLD 2023 SC 42.  
+34 Parvez Elahi v. Deputy Speaker, Provincial Assembly of Punjab PLD 2022  SC 678.  SMC No.1/2023, etc  20 
+ 
+created a charged political atmosphere  in the country , the involvement 
+and interference of this Court in its discretionary and extraordinary 
+jurisdiction under Article 184(3) of the Constitution  into a “ political 
+thicket ”, would be  inappropriate and would inevitably invite untoward  
+criticism  of a large section of the peopl e. ‘We must not forget  that 
+democracy is never bereft of divide. The very essence of the political 
+system is to rectify such disagreements, but to take this key 
+characteristic outside the realm of our political system and transfer it to 
+the judiciary, threatens the very core of democratic choice – raison 
+d’etre’  of democracy. We must also remain cognisant that there will 
+always be crucial events in the life of a nation, where the political 
+system may disappoint, but this cannot lead to the conclusion that the 
+judiciary will provi de a better recourse. ’35 A democratic political process , 
+however that may be, is best suited to resolve such matters . 
+34.  Democracy, it must be understood, does not mean 
+majoritarian rule.  The essence of democracy is the participation of all 
+concerned in the decision -making process and arriving at collective 
+decision s by accommodating  differences of interest and opinion  to a 
+possible extent . Taking all decisions only by majority rule is no less 
+dictatorship , and the absolu tist approach to controversial issues is the 
+hallmark of extremists . Opacity and inconsistency , which are  taken as 
+intellectual impurity in judicial decision s, are often inseparable from the 
+kind of comprom ises the politicians have to make in the democrati c 
+process. Unbending attachment to a standpoint is often proved 
+politically sterile.  Litigation is not a consultative or participatory process 
+and can therefore rarely mediate differences on issues where there is 
+room for reasonable people to disagree; only a political process can 
+resolve such issues and adjust disagreements.  Thus, a  nation cannot 
+reduce divisions among its people unless their representatives – the 
+politicians – adopt and participate in the democratic process of political 
+dialogue , in finding solutions to the people’s social, economic and 
+political problems.36 
+Decision by 4 -3 or 3 -2 majority  
+35.  We also find it necessary to narrate the reasons for non -
+issuance of the Order of the Court in the present case, to make them 
+                                                             
+35 Presidential Reference No.1 of 2020 PLD 2021 SC 825 per Yahya Afridi, J.  
+36 Jonathan Sumption, Trials of the State: Law and the Decline of Politics  (2019).  SMC No.1/2023, etc  21 
+ 
+part of the record.  We believed that our decision concurring with the 
+decision of our learned brothers ( Yahya Afridi and Athar Minallah, JJ.)  
+in dismissing the present suo motu  proceedings and the connected 
+constitution petitions, had become the Order of the Court by a major ity 
+of 4-3 while our other three learned brothers held the view that their 
+order was the Order of the Court by a majority of 3 -2. Because of this 
+difference of opinion , the Order of the Court, which is ordinarily 
+formulated  by the head of the Bench could n ot be issued. We are of the 
+considered view that our decision concurring with the decision of our 
+learned brothers ( Yahya Afridi and Athar Minallah, JJ.)  in dismissing 
+the present suo motu  proceedings and the conn ected constitution 
+petitions  is the  Order o f the Court with a  majority of 4 to 3 , binding 
+upon all the concerned . The answer lies in understanding the 
+administrative powers enjoyed by  the Hon’ble Chief Justice  in 
+reconstituting  a Bench , when the Bench once constituted and assigned 
+a case has commenced hearing of a case. This court has held in H.R.C. 
+No.14959 -K of 2018,37 that “once the bench is constituted, cause list is 
+issued and the bench starts hearing the cases, the matter regarding 
+constitution of the bench goes outside the pale of administrative 
+powers of the Chief Justice and rest on the judicial side, with the 
+bench. Any member of the bench may, however, recuse to hear a case 
+for personal reasons or may not be available to sit on the bench due 
+to prior commitments or due to illness. The bench may also be 
+reconstituted if it is against the Rules and requires a three -member 
+bench instead of two. In such eventualities the bench passes an order 
+to place the matter before the Chief Just ice to nominate a new bench. 
+Therefore, once a bench has been constituted, cause list issued and 
+the bench is assembled for hearing cases, the Chief Justice cannot 
+reconstitute the bench, except in the manner discussed above. ” The 
+Court fu rther held that “in the absence of a recusal by a member of 
+the Bench, any amount of disagreement amongst the members of the 
+Bench, on an issue  before them, cannot form a valid ground for 
+reconstitution of the Bench ….reconstitution of a bench while hearing 
+a case, in the absence of any recusal from any member on the bench 
+or due to any other reason described above, would amount to stifling 
+the independent view of the judge. Any effort to muffle disagreement 
+or to silence dissent or to dampen an alternative viewpoint of a 
+                                                             
+37 H.R.C. No.14959 -K of 2018  PLD 2019 SC 183 per Syed Mansoor Ali Shah, J.  SMC No.1/2023, etc  22 
+ 
+member on the bench, would shake the foundations of a free and 
+impartial justice system … a bench, once it is constituted and is 
+seized of a matter on the judicial side, cannot be reconstituted by the 
+Chief Justice in exercise of his administrative powers, u nless a 
+member(s) of the bench recuses or for reasons discussed above. ”         
+36.  We endorse  the above view and hold that a Judge forming 
+part of a Bench once constituted and seized of the  case assigned to it 
+cannot be excluded from that Bench unless he recuses himself from 
+hearing that case or becomes  unavailable to sit on the Bench  for some 
+unforeseen reason . After having made a final decision on the matter at 
+an early stage of the proceedings of a case, the non -sittin g of a Judge in 
+the later proceedings does not amount to his recusal from hearing the 
+case nor does it constitute his exclusion from the Bench. I n this case, 
+the two Hon ’ble Judges having decided the matter , left the option of 
+their sitting  or not sitting  on the Bench  with the Hon’ble Chief Justice , 
+for further hearing of the case . The exercise of this option by the 
+Hon’ble Chief Justice has no effect on the judicial decision  of those  two 
+Hon’ble Judges  passed in the case. The reconstitution  of the Bench was 
+simply an administrative act to   facilitate  the further hearing of the case 
+by the remaining five members of the  Bench  and could not  nullify or 
+brush aside the judicial decisions given by the two Hon’ble Judges  in 
+this case , which have to be counted when the matter is finally 
+concluded. It is important to underline that the two Hon’ble Judges  (Ijaz 
+ul Ahsan and Sayyed Mazah ar Ali Akbar Naqvi , JJ.) were not removed 
+from the Bench but had voluntarily recused themselves. Thus,  their 
+short orders are very much part of the case, therefore, the 
+administrative order of reconstitution of the Bench by the Hon’ble Chief 
+Justice cannot brush aside the judicial decisions of the two Hon’ble 
+Judges who had decided the matter  when the case was heard by a nine -
+member Bench . Failure to  count the decision of our learned brothers 
+(Yahya Afridi and Athar Minallah, JJ.)  would amount to excluding them 
+from the Bench without their consent, which is not permissible  under 
+the law and not within the po wers of the Hon’ble Chief Justice.  
+Therefore, we are  of the opinion that the dismissal of the present suo 
+motu proceedings and the con nected constitution petitions i s the Order 
+of the Court by a majority of 4 to 3 of the  seven -member Bench . We are 
+also fortified in our opinion by the precedent of the well -known Panama 
+case. In the said case, the first order of the Court was passed by  a 3-2 SMC No.1/2023, etc  23 
+ 
+majority,38 and in the subsequent hearings conducted in pursuance of 
+the majority judgment the two Hon’ble Judges, who had made and 
+announced their final decision, did not si t on the Bench39 but they were 
+not considered to have been excluded from the B ench and were ma de a 
+party to the final judgment passed by the re mainin g three Hon’ble 
+Judges40, and they also sat o n the B ench that  heard the review 
+petitions41.     
+Need of making rules for regulating the exercise of jurisdiction  under 
+Article 184(3) and the constitution of Benches  
+37.  Lastly , we find it essential  to underline that in order to 
+strengthen our institution and to ensure public trust and public 
+confidence in our Court, it is high time that we revisit  the power of 
+“one-man show ” enjoyed by the office of the Chief Justice of Pakistan . 
+This Court  cannot be dependent on the solitary decision of one man, 
+the Chief Justice, but must be regulated through a rule -based system 
+approved by all Judges of the Court under Article 191 of the 
+Constitution, in regulating the  exercise of its jurisdiction under Article 
+184(3) including the exercise of suo motu jurisdiction; the constitution 
+of Benches to hear such cases; the constitution of Regular Benches to 
+hear all the other cases instituted in this Court; and the constituti on of 
+Special Benches .   
+38.  The power of doing a “one-man show” is not only 
+anachr onistic, outdated and obsolete but also is antithetical to good  
+governance and incompatib le to modern democra tic norms. One-man 
+show lead s to the concentration of power in the hands of one individual, 
+making the system more susceptible to the abuse of power. In contrast, 
+a collegial system with checks and balances  helps prevent the abuse 
+and mistakes  in the exercise of power  and promote the transpar ency 
+and accountability.  When one person has too much power, there is a 
+risk that the institution may become autocratic  and insulated , resulting 
+in one -man policies being pursued, which may have a tendency of going 
+against the rights and interests of the peopl e. We must not forget that 
+our institution draws its strength from public perception.  The entire 
+edifice of this Court and of the justice system stands  on publ ic trust 
+and confidence reposed in  it. Therefore , one-man show needs a revis it 
+                                                             
+38 Imran Khan v. N awaz Sharif PLD 2017 SC 265.  
+39 Imran Khan v. Nawaz Sharif PLD 2017 SC 692.  
+40 Ibid. 
+41 Nawaz Sharif v. Imran Khan PLD 2018 SC 1.  SMC No.1/2023, etc  24 
+ 
+as it limits diverse  perspectives, concentrate s power, and increase s the 
+risk of an autocratic rule. On the other hand, the collegial model 
+ensures g ood governance as it rests on collab oration, shared decision -
+making  and balance of power to ensure the best outcome .   
+39.  The Chief Justice of this Court is conferred with wide 
+discretion in the matter of constituting Benches and assigning cases to 
+them under the present Supreme Court Rules 1980 . Ironically , this 
+Court has  time and again held how public fu nctionaries  ought to 
+structure their discretion42 but has miserably failed to set the same 
+standard f or itself leaving the Chief Justice with unfettered  powers  in 
+the matter of regulating the jurisdiction  under Article 184(3) (including 
+suo moto) and in matters of con stituting benches and assigning cases.  
+It is this unbridled power enjoyed by the Chief Justice in taking up any 
+matter as a suo motu case  and in  constituting Special B enches after the  
+institution  of the cases and assigning cases to them that has brought 
+severe criticism and lowered the honour and prestige of this Court . Our 
+acts and decisions as members of a constitutional institution are 
+recorded in history and commented upon.  Political scientist and l egal 
+scholar , Yasser Kureshi , in his recent book “ Seeki ng Supremacy - The 
+Pursuit of Judic ial Power in Pakistan ”43 criticizes this unfette red power 
+of the Chief Justice , thus : 
+During the tenure of Chief Justice Saqib  Nisar (2016 -
+2019), the Supreme  Court used its suo moto powers to 
+intervene in governance to an extent that had never been 
+seen before. It is hard to do justice to Justice Nisar's 
+whirlwind of on -bench and off -bench interventions, as he 
+sought to fix all of Pakistan's socio -economic pro blems: 
+water purity and distribution, milk production, public 
+sector corruption, hospital management, educational 
+disparities and population control, through the striking of 
+the gavel. Within the first three months of 2018 alone, 
+Nisar launched thirty suo moto cases, often prompted by 
+news articles he read, headlines he watched on the evening 
+news or even posts he saw on social media. In one case, 
+Nisar took suo moto notice of a photograph circulating on 
+social media that showed a funeral proces sion passin g over 
+sewage in a narrow street.  
+Upon taking suo moto notice, Nisar would then order 
+public officials to present themselves before the Court. 
+During these proceedings, he would typically reprimand 
+public officers and comment on state mis management, and 
+in interim orders, he would direct public officers to remedy 
+                                                             
+42 Aman Ullah v. Federal Government PLD 1990 SC 1092 (5 -MB); Chairman, R.T.A. v. Pakistan Mutual 
+Insurance Company PLD 1991 SC 14; Govt. of N.W.F.P. v. Mejee Flour Mills 1997 SCMR 1804.  
+43  Cambridge University Press (2022)  pp. 223 -225. SMC No.1/2023, etc  25 
+ 
+the issue and report back to the Court, dismiss officers who 
+did not adequately address his concerns and sometimes 
+even issue con tempt of court charges against public 
+officials who did not satisf actorily comply with his orders. 
+Perhaps the most controversial example of Justice Nisar's 
+suo moto jurisprudence was his order to construct new 
+dams to resolve Pakistan's water shortages, 'for the 
+collective benefit of the nation'. Nisar launched a 
+fundra ising scheme for donations to pay for the multi -
+billion dollar dam -building project, authorizing televised 
+ads and newspaper articles to openly solicit funding, and 
+even ordering convicted parties in cases to do with assault, 
+land acquisitions and environm ental damage to deposit 
+funds into the fund for the dam for the Court's new project. 
+Off the bench, Nisar also transformed the role of the chief 
+justice, donning the hat of government inspector and 
+international fundraiser, showing up at hospitals, schools  
+and water plants to assess their condit ions, followed by 
+news cameras.  
+In order to build a strong,  open and transparent institution, we have to 
+move towards a rule-based institution . The discretion of the Chief 
+Justice needs to be structured through rules. This Court has held that 
+structuring discretion  means  regularizing  it, organizing it and  
+producing order in it, which helps achieve transparency, consistency 
+and equal treatment in decision -making  - the hallmarks of the rule of 
+law. The seven instru ments that are usually  described as useful in the 
+structuring of discretionary power are open plans, open policy 
+statements, open rules, open findings, open reasons, open precedents, 
+and fair procedure. Our jurisprudence must first be applied at home.  
+40.  Apprehending the misuse of the extraordinary original 
+jurisdiction of this Court under Art icle 184(3) of the Constitution,  Ajmal 
+Mian, CJ., speaking for the majority of a seven -member Bench of this 
+Court in Wukala Mahaz ,44 emphasized  in 1998 that “a balanced, 
+consistent and indiscriminate policy ” is to be evolved by this Court  for 
+invoking and exercis ing this extraordinary original jurisdiction of the 
+Court . The later years proved his apprehe nsion true. The experience of 
+last two decades  has shown a r ather more need to frame “a balanced, 
+consistent and indiscriminate policy”  for invoking and exercising this 
+jurisdiction.  Leaving it to the unstructured discretion of one person - 
+the Chief Justice  - has utterly failed .  With the change in the office of 
+the Chief Justice , there is a change in the “policy ” of invoking and 
+exercising the jurisdiction under Article 184(3) of the Constitution . 
+What then is the solution? In our opinion , it is the making of rules on 
+                                                             
+44 Wukala Mahaz  v. Federation of Pakistan  PLD 1998 SC 1263 (7 -MB).  SMC No.1/2023, etc  26 
+ 
+the matter  by this  Court in the exercise of i ts rule -making power 
+conferred on it by  Article 191 of the Constitution , which can serve the 
+purpose . Such rules may provide  that the extraordinary jurisdiction of 
+the Court under Article 184(3) of the Constitution, either on the petition 
+of a person or suo motu  by the Court, shall be invoked only if a majority 
+of all the Judges or the first five or seven Judges of the Court, including 
+the Chief Justice,  as may be prescribed in the rules,  agrees to it while 
+considering the matter on the administrative sid e. The criterio n for 
+selecting cases  for being dealt with under this jurisdiction should also 
+be clearly laid down in the rules, to make the practice of the Court in 
+this regard, uniform  and transparent.  
+41.  So far as the matter of constituting a Bench for hearing a 
+case under Article 184(3) of the Constitution is concerned, there must 
+also be uniformity and transparency, which can be best assured by 
+constituting a regular five  or seven -member Bench once at th e 
+commencement of every judicial year , or twice a year for each term of 
+six months , by including in that Bench the senior most Judge s or the 
+senior most Judges  of each Province on  the strength of this Court with 
+the Chief Justice or the Senior Puisne Judge as head of that Bench. 
+Constituting  special Benches on  case to case ba sis, afte r the institution 
+of the cases, is complete negation of fairness, transparency and 
+impartiality requir ed of a judicial institution to  maintain  its legitimacy 
+and credibility of its judgments.  
+42.  The right to have his case heard by a Bench or a Judge to 
+whom the cases are assigned on the basis of a notified objective 
+criteri on is referred to as a “right to a natural judge ” in some 
+jurisdictions.45 An objective criterion prevents a Judge from choosing 
+his cases and the parties from choosing their Judge. The said right is 
+rooted and enshrined in our jurisdiction in the fundamental rights of  
+access to justice through an indepen dent and impartial court, fair trial 
+and equality  before law guaranteed by Articles 9, 10A and 25 of the 
+Constitution.  The right to be treated in accordance with law conferred 
+by Article 4 of the Constitution also embodies this  right, as the  rule of 
+law ma ndated by Article 4 assumes the existence of laws that are 
+known to those who or whose matters are to be treated in accordance 
+therewith.  This Court, being the guardian of the fundamental rights of 
+                                                             
+45 Emmanuel Jeuland , The right to a natural judge and the judicial organization , French Journal of Public 
+Administration  (2008).  SMC No.1/2023, etc  27 
+ 
+the people of Pakistan against encroachments made by other  public 
+authorities and institutions, is to enforce the fundamental right of the 
+public relating to its own functioning with more fervor and commitment 
+than others. We are enl ightened in this respect by the invaluable 
+remarks of Fletcher Moulton, L.J., and  quoted by Earl Loreburn in Scott 
+v. Scott,46 that “courts of justice, who are the guardian of public 
+liberties, ought to be doubly vigilant against encroachments by  
+themselves.” That is why this Court needs to be rule b ased and those 
+rules should be unifor m, open and available to the public.    
+43.  These are the reasons for our short order dated 01.03.2023, 
+dismissing the present constitution petitions and dropping the suo motu  
+proceeding s, with the observation that the respective High Courts shall 
+decide the matters pending before them within three working days, 
+which is reproduced hereu nder for complet ion of record:  
+For the reasons to be recorded later, we hold that:  
+i. The suo motu proceedings (SMC No. 1 of 2023), in  the facts and 
+circumstances of the case, are wholly unjustified in the mode 
+and manner they were taken up under Article 184(3) of the 
+Constitution of the Islamic Republic of Pakistan (“Constitution”), 
+besides being initiated with undue haste.  
+  
+ii. The Suo Motu Case No.1 of 2023 and the two Const. Petitions 
+No. 1 & 2 of 2023 under Article 184(3) of the Constitution, in 
+the light of the principles settled in Manzoor Ilahi47 and Benzair 
+Bhutto48, do not constitute a fit case to exercise the 
+extraordinary  original jurisdiction of this Court under Article 
+184(3) of the Constitution and are thus not maintainable as the 
+same constitutional and legal issues seeking the same relief are 
+pending and being deliberated upon by the respective Provincial 
+High Courts in Lahore and Peshawar, without there being any 
+inordinate delay in the conduct of the proceedings before them.  
+ 
+iii. There is no justification to invoke our extraordinary jurisdiction 
+under Article 184(3) to initiate suo motu proceedings or 
+entertain petitions  under Article 184(3) of the Constitution, as a 
+single Bench of the Lahore High Court has already decided the 
+matter in favour of the petitioner before the said High Court vide 
+judgment dated 10.02.2023 and the said judgment is still in the 
+field. The intr a court appeals (ICAs) filed against the said 
+judgment are pending before the Division Bench of the Lahore 
+High Court (and none of the said petitioners has approached 
+this Court under Article 185(3) of the Constitution).  
+ 
+iv. Once a constitutional issue is pen ding before a Provincial High 
+Court, keeping in view the Federal structure of our Constitution 
+the autonomy and independence of the apex provincial 
+constitutional court, should not be readily interfered with rather 
+be supported to strengthen the provincial  autonomy and avoid 
+undermining the autonomy of the provincial constitutional 
+courts.  
+ 
+                                                             
+46 Scott v. Scott 1913 AC 417.  
+47 PLD 1975 SC 66.  
+48 PLD 1988 SC 416.  SMC No.1/2023, etc  28 
+ 
+v. There is no inordinate delay in the proceedings pending before 
+the High Courts, infact the instant proceedings have 
+unnecessarily delayed the matter before the High Cour ts. 
+However, considering the importance of the matter we expect 
+that the respective High Courts shall decide the matters pending 
+before them within three working days from today.  
+ 
+vi. Even otherwise without prejudice to the above, such like 
+matters should bes t be resolved by the Parliament.  
+2. We, therefore, agree with the orders dated 23.02.2023 passed by our learned 
+brothers, Yahy a Afridi and Athar Minallah, JJ .49, and dismiss the present 
+constitution petitions and drop the suo motu proceedings.  
+  
+ 
+ 
+Islamaba d, 
+1st March, 2023.  
+Approved for reporting  
+Sadaqat   
+Judge  
+ 
+Judge  
+ 
+ 
+                                                             
+49 Initially a nine member bench heard this matter. The aforementioned two Hon’ble Judges decided the 
+matter by dismissing the said petitions. Later on two other Hon’ble Judges disassociated themselves from 
+the Bench for personal reasons and as the two afore mentioned judges had dismissed the matter, the Bench 
+was reconstituted into a five member bench vide order dated 27.02.2023. The decisions of the 
+aforementioned two Hon’ble Judges dated 23.2.2023 form part of the record of this case.  
