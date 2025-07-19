@@ -120,7 +120,7 @@ def ingest_and_get_retriever() -> Optional[Chroma]:
 
     # 2. If local DB is not populated, attempt to download pre-built DB
     # Check if PREBUILT_DB_URL has been configured (i.e., not the placeholder)
-    if not is_chroma_populated_locally and PREBUILT_DB_URL != "https://drive.google.com/uc?export=download&id=1NwLs1IApOGV2teNRPyxYjgOzgBNrJZKf&confirm=t":
+    if not is_chroma_populated_locally and PREBUILT_DB_URL == "https://drive.google.com/uc?export=download&id=1NwLs1IApOGV2teNRPyxYjgOzgBNrJZKf&confirm=t":
         print(f"\n--- DEBUG: Local ChromaDB not populated. Attempting to download pre-built DB from {PREBUILT_DB_URL} using requests ---")
         try:
             # Clean up any incomplete/corrupt local db folder before downloading
@@ -134,7 +134,7 @@ def ingest_and_get_retriever() -> Optional[Chroma]:
             response.raise_for_status() # Raise an exception for HTTP errors (4xx or 5xx)
 
             print(f"DEBUG: Download response status code: {response.status_code}")
-            print(f"DEBUG: Download response headers: {response.headers}")
+            print(f"DEBUG: Download response headers: {response.headers}") # Print headers for debugging
 
             # Check if the response is actually a file download (not an HTML page)
             content_type = response.headers.get('Content-Type', '')
@@ -143,12 +143,20 @@ def ingest_and_get_retriever() -> Optional[Chroma]:
             # If it's not a direct attachment or is HTML, it might be an HTML page (e.g., warning page)
             if 'application/zip' not in content_type and 'application/octet-stream' not in content_type and 'filename=' not in content_disposition:
                 # Try to read a small part of content to check if it's HTML
+                # Use a BytesIO buffer to store the initial chunk so it can be re-read by zipfile
+                buffer = io.BytesIO()
                 initial_content_chunk = next(response.iter_content(chunk_size=1024))
-                initial_content_str = initial_content_chunk.decode('utf-8', errors='ignore')
+                buffer.write(initial_content_chunk)
+                buffer.seek(0) # Rewind buffer to read from beginning
+
+                initial_content_str = buffer.read().decode('utf-8', errors='ignore')
+                buffer.seek(0) # Rewind again for zipfile
+
                 if "<!DOCTYPE html" in initial_content_str.lower() or "<html" in initial_content_str.lower():
                     raise requests.exceptions.RequestException("Response is likely an HTML page, not a direct file download. Check Google Drive sharing permissions or URL.")
-                # If it's not HTML, put the chunk back into a BytesIO object for zipfile
-                file_content_stream = io.BytesIO(initial_content_chunk)
+                
+                # If it's not HTML, the buffer already contains the initial chunk
+                file_content_stream = buffer
             else:
                 file_content_stream = io.BytesIO()
 
