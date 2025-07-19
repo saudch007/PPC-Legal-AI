@@ -1,1 +1,3 @@
-Scanned with CamScanner
+version https://git-lfs.github.com/spec/v1
+oid sha256:e95a58bd42f117d27cc862b81fa91c30b6c6b4bc73f8c12d28c6797b533c2fc7
+size 25
