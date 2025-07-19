@@ -7,11 +7,11 @@ from langchain.docstore.document import Document
 from typing import List, Optional
 import streamlit as st
 from pathlib import Path
-import requests
-import zipfile
-import io
-import shutil
-import subprocess # Added for running wget
+import requests # Used for downloading
+import zipfile # Used for unzipping
+import io # Used for in-memory zip handling
+import shutil # Used for removing directories
+# Removed subprocess as wget is no longer used
 
 # --- IMPORTANT: Workaround for ChromaDB SQLite3 issue on Streamlit Cloud ---
 try:
@@ -121,7 +121,7 @@ def ingest_and_get_retriever() -> Optional[Chroma]:
     # 2. If local DB is not populated, attempt to download pre-built DB
     # Check if PREBUILT_DB_URL has been configured (i.e., not the placeholder)
     if not is_chroma_populated_locally and PREBUILT_DB_URL != "https://drive.google.com/uc?export=download&id=1NwLs1IApOGV2teNRPyxYjgOzgBNrJZKf&confirm=t":
-        print(f"\n--- DEBUG: Local ChromaDB not populated. Attempting to download pre-built DB from {PREBUILT_DB_URL} using wget ---")
+        print(f"\n--- DEBUG: Local ChromaDB not populated. Attempting to download pre-built DB from {PREBUILT_DB_URL} using requests ---")
         try:
             # Clean up any incomplete/corrupt local db folder before downloading
             if Path(chroma_dir_str).exists():
@@ -129,41 +129,37 @@ def ingest_and_get_retriever() -> Optional[Chroma]:
                 shutil.rmtree(chroma_dir_str)
             os.makedirs(chroma_dir_str, exist_ok=True)
 
-            # Define the path for the downloaded zip file
-            zip_file_path = Path(chroma_dir_str) / "temp_db.zip"
+            # Use requests.get with stream=True for large files and allow_redirects
+            response = requests.get(PREBUILT_DB_URL, stream=True, allow_redirects=True, timeout=300) # Increased timeout
+            response.raise_for_status() # Raise an exception for HTTP errors (4xx or 5xx)
 
-            # Use subprocess to call wget
-            # -O: output document to a specific file
-            # --no-check-certificate: useful for some https issues, but generally avoid if not needed
-            # --quiet: suppress output, but we want some for debugging
-            # -q: quiet (less verbose than --quiet)
-            # -nc: no clobber (don't overwrite existing files) - not strictly needed here since we clear the dir
-            # --show-progress: show progress bar (might not appear in Streamlit logs)
-            wget_command = [
-                "wget",
-                "-O", str(zip_file_path),
-                PREBUILT_DB_URL
-            ]
-            print(f"DEBUG: Executing wget command: {' '.join(wget_command)}")
-            
-            # Run wget, capture output for debugging
-            result = subprocess.run(wget_command, capture_output=True, text=True, check=False)
+            print(f"DEBUG: Download response status code: {response.status_code}")
+            print(f"DEBUG: Download response headers: {response.headers}")
 
-            if result.returncode != 0:
-                print(f"ERROR: wget command failed with exit code {result.returncode}.")
-                print(f"wget stdout: {result.stdout}")
-                print(f"wget stderr: {result.stderr}")
-                raise Exception(f"wget download failed: {result.stderr}")
+            # Check if the response is actually a file download (not an HTML page)
+            content_type = response.headers.get('Content-Type', '')
+            content_disposition = response.headers.get('Content-Disposition', '')
 
-            print(f"DEBUG: wget completed. Checking downloaded file...")
+            # If it's not a direct attachment or is HTML, it might be an HTML page (e.g., warning page)
+            if 'application/zip' not in content_type and 'application/octet-stream' not in content_type and 'filename=' not in content_disposition:
+                # Try to read a small part of content to check if it's HTML
+                initial_content_chunk = next(response.iter_content(chunk_size=1024))
+                initial_content_str = initial_content_chunk.decode('utf-8', errors='ignore')
+                if "<!DOCTYPE html" in initial_content_str.lower() or "<html" in initial_content_str.lower():
+                    raise requests.exceptions.RequestException("Response is likely an HTML page, not a direct file download. Check Google Drive sharing permissions or URL.")
+                # If it's not HTML, put the chunk back into a BytesIO object for zipfile
+                file_content_stream = io.BytesIO(initial_content_chunk)
+            else:
+                file_content_stream = io.BytesIO()
 
-            if not zip_file_path.exists() or zip_file_path.stat().st_size == 0:
-                raise Exception(f"Downloaded file '{zip_file_path}' does not exist or is empty.")
+            # Write the rest of the stream content
+            for chunk in response.iter_content(chunk_size=8192):
+                file_content_stream.write(chunk)
+            file_content_stream.seek(0) # Rewind to the beginning for zipfile
 
-            print(f"DEBUG: Downloaded temp_db.zip to {zip_file_path}. Extracting...")
-            with zipfile.ZipFile(zip_file_path, 'r') as zip_ref:
+            print(f"DEBUG: Downloaded stream. Attempting to extract zip from memory...")
+            with zipfile.ZipFile(file_content_stream, 'r') as zip_ref:
                 zip_ref.extractall(chroma_dir_str)
-            os.remove(zip_file_path) # Clean up temp zip file
 
             print(f"DEBUG: Successfully downloaded and extracted pre-built DB to {chroma_dir_str}")
 
@@ -175,10 +171,12 @@ def ingest_and_get_retriever() -> Optional[Chroma]:
             else:
                 print("DEBUG: Downloaded DB is empty or corrupt. Falling back to fresh ingestion.")
 
-        except FileNotFoundError:
-            print("ERROR: 'wget' command not found. Please ensure wget is installed in the environment. Falling back to fresh ingestion.")
+        except requests.exceptions.RequestException as req_err:
+            print(f"ERROR: Network/Request error downloading pre-built DB: {req_err}. Falling back to fresh ingestion.")
+        except zipfile.BadZipFile as zip_err:
+            print(f"ERROR: Downloaded file is not a valid zip: {zip_err}. This often means the URL provided an HTML page instead of a zip file. Falling back to fresh ingestion.")
         except Exception as e:
-            print(f"ERROR: Failed to download or extract pre-built DB using wget: {e}. Falling back to fresh ingestion.")
+            print(f"ERROR: Failed to download or extract pre-built DB using requests: {e}. Falling back to fresh ingestion.")
     elif not is_chroma_populated_locally and PREBUILT_DB_URL == "https://drive.google.com/uc?export=download&id=YOUR_FILE_ID_HERE&confirm=t":
         print("DEBUG: PREBUILT_DB_URL not configured. Proceeding with fresh ingestion.")
 
