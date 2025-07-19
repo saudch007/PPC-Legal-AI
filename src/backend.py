@@ -123,7 +123,7 @@ def ingest_and_get_retriever() -> Optional[Chroma]:
                 print(f"ERROR: Failed to load existing ChromaDB from '{chroma_dir_str}': {e}. Attempting other methods.")
 
     # 2. If local DB is not populated, attempt to download pre-built DB
-    if not is_chroma_populated_locally and PREBUILT_DB_URL != "YOUR_PUBLIC_DOWNLOAD_URL_FOR_DB.zip":
+    if not is_chroma_populated_locally and PREBUILT_DB_URL != "https://drive.google.com/uc?export=download&id=1NwLs1IApOGV2teNRPyxYjgOzgBNrJZKf":
         print(f"\n--- DEBUG: Local ChromaDB not populated. Attempting to download pre-built DB from {PREBUILT_DB_URL} ---")
         try:
             # Clean up any incomplete/corrupt local db folder before downloading
