@@ -57,12 +57,9 @@ chroma_dir_str = str(CHROMA_PERSIST_DIRECTORY)
 
 # --- IMPORTANT: Configure your pre-built DB download URL here ---
 # If you upload your 'db' folder as a .zip to Google Drive or another cloud storage,
-# you need to get a PUBLICLY ACCESSIBLE direct download link.
 # For Google Drive, convert a shareable link like:
-# https://drive.google.com/file/d/FILE_ID/view?usp=sharing
-# To a direct download link like:
-# https://drive.google.com/uc?export=download&id=FILE_ID
-PREBUILT_DB_URL = "https://drive.google.com/file/d/1NwLs1IApOGV2teNRPyxYjgOzgBNrJZKf/view?usp=drive_link" # <--- REPLACE THIS WITH YOUR ACTUAL URL
+
+PREBUILT_DB_URL = "https://drive.google.com/uc?export=download&id=1NwLs1IApOGV2teNRPyxYjgOzgBNrJZKf" 
 
 CHUNK_SIZE = 200
 CHUNK_OVERLAP = 40
