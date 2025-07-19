@@ -4,4 +4,3 @@ __pycache__/
 .streamlit/
 .devcontainer/
 db/
-scraped_legal_data/
