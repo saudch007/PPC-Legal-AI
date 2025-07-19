@@ -1,5 +1,5 @@
 import os
-import sys # Import sys
+import sys
 from dotenv import load_dotenv
 from langchain_community.document_loaders import PyPDFDirectoryLoader, TextLoader, DirectoryLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
@@ -7,6 +7,10 @@ from langchain.docstore.document import Document
 from typing import List, Optional
 import streamlit as st
 from pathlib import Path
+import requests # Added for downloading
+import zipfile # Added for unzipping
+import io # Added for in-memory zip handling
+import shutil # Added for removing directories
 
 # --- IMPORTANT: Workaround for ChromaDB SQLite3 issue on Streamlit Cloud ---
 # This forces ChromaDB to use the pysqlite3-binary package if available,
@@ -22,7 +26,7 @@ except ImportError:
 
 # LangChain components for RAG
 from langchain_openai import OpenAIEmbeddings, ChatOpenAI
-from langchain_chroma import Chroma # Corrected import
+from langchain_chroma import Chroma
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.runnables import RunnablePassthrough
@@ -40,9 +44,7 @@ current_file_dir = Path(__file__).parent
 PROJECT_ROOT_DIR = current_file_dir.parent
 
 # Define directories for your data sources
-# All PDF files (PPC and additional) are now assumed to be inside the 'data' folder
 PPC_PDF_DIR = PROJECT_ROOT_DIR / "data"
-# This is for your judgments and other text-based scraped data
 SCRAPED_DATA_DIR = PROJECT_ROOT_DIR / "scraped_legal_data"
 
 # Convert Path objects to strings for functions that require them
@@ -53,10 +55,17 @@ scraped_data_dir_str = str(SCRAPED_DATA_DIR)
 CHROMA_PERSIST_DIRECTORY = PROJECT_ROOT_DIR / "db"
 chroma_dir_str = str(CHROMA_PERSIST_DIRECTORY)
 
+# --- IMPORTANT: Configure your pre-built DB download URL here ---
+# If you upload your 'db' folder as a .zip to Google Drive or another cloud storage,
+# you need to get a PUBLICLY ACCESSIBLE direct download link.
+# For Google Drive, convert a shareable link like:
+# https://drive.google.com/file/d/FILE_ID/view?usp=sharing
+# To a direct download link like:
+# https://drive.google.com/uc?export=download&id=FILE_ID
+PREBUILT_DB_URL = "https://drive.google.com/file/d/1NwLs1IApOGV2teNRPyxYjgOzgBNrJZKf/view?usp=drive_link" # <--- REPLACE THIS WITH YOUR ACTUAL URL
 
-# Modified: Further reduced CHUNK_SIZE and CHUNK_OVERLAP
-CHUNK_SIZE = 200 # Reduced from 300
-CHUNK_OVERLAP = 40 # Reduced from 50
+CHUNK_SIZE = 200
+CHUNK_OVERLAP = 40
 
 # --- Corrected OpenAI API Key Handling (Global Initialization) ---
 OPENAI_API_KEY: Optional[str] = None
@@ -91,8 +100,8 @@ else:
 def ingest_and_get_retriever() -> Optional[Chroma]:
     """
     Handles data ingestion (loading, chunking, embedding) and returns a ChromaDB instance.
-    Loads from a primary PDF directory and a text data directory.
-    Checks if the vector store already exists to avoid re-ingestion.
+    Prioritizes loading from an existing vector store or downloading a pre-built one.
+    Falls back to fresh ingestion if other methods fail.
     """
     print("DEBUG: Entering ingest_and_get_retriever function.")
 
@@ -100,113 +109,145 @@ def ingest_and_get_retriever() -> Optional[Chroma]:
         print("ERROR: Embeddings model not initialized. Cannot ingest data or get retriever.")
         return None
 
-    is_chroma_populated = False
+    # 1. Attempt to load existing local ChromaDB
+    is_chroma_populated_locally = False
     if Path(chroma_dir_str).exists():
         if (Path(chroma_dir_str) / "chroma.sqlite3").exists() or \
            (Path(chroma_dir_str) / "collections").exists():
-            is_chroma_populated = True
+            try:
+                vector_store = Chroma(persist_directory=chroma_dir_str, embedding_function=embeddings_model)
+                if vector_store._collection.count() > 0:
+                    is_chroma_populated_locally = True
+                    print(f"DEBUG: Loaded existing ChromaDB with {vector_store._collection.count()} documents.")
+                    return vector_store
+                else:
+                    print("DEBUG: Existing ChromaDB found but it's empty. Proceeding with other methods.")
+            except Exception as e:
+                print(f"ERROR: Failed to load existing ChromaDB from '{chroma_dir_str}': {e}. Attempting other methods.")
 
-    if is_chroma_populated:
-        print(f"DEBUG: ChromaDB directory exists and seems populated at '{chroma_dir_str}'. Attempting to load existing DB.")
+    # 2. If local DB is not populated, attempt to download pre-built DB
+    if not is_chroma_populated_locally and PREBUILT_DB_URL != "YOUR_PUBLIC_DOWNLOAD_URL_FOR_DB.zip":
+        print(f"\n--- DEBUG: Local ChromaDB not populated. Attempting to download pre-built DB from {PREBUILT_DB_URL} ---")
         try:
+            # Clean up any incomplete/corrupt local db folder before downloading
+            if Path(chroma_dir_str).exists():
+                print(f"DEBUG: Clearing existing '{chroma_dir_str}' before downloading pre-built DB.")
+                shutil.rmtree(chroma_dir_str)
+            os.makedirs(chroma_dir_str, exist_ok=True)
+
+            response = requests.get(PREBUILT_DB_URL, stream=True)
+            response.raise_for_status() # Raise an exception for HTTP errors (4xx or 5xx)
+
+            # Use a temporary file to save the zip content
+            zip_file_path = Path(chroma_dir_str) / "temp_db.zip"
+            with open(zip_file_path, 'wb') as f:
+                for chunk in response.iter_content(chunk_size=8192):
+                    f.write(chunk)
+
+            print(f"DEBUG: Downloaded temp_db.zip to {zip_file_path}. Extracting...")
+            with zipfile.ZipFile(zip_file_path, 'r') as zip_ref:
+                zip_ref.extractall(chroma_dir_str)
+            os.remove(zip_file_path) # Clean up temp zip file
+
+            print(f"DEBUG: Successfully downloaded and extracted pre-built DB to {chroma_dir_str}")
+
+            # Verify the downloaded DB
             vector_store = Chroma(persist_directory=chroma_dir_str, embedding_function=embeddings_model)
             if vector_store._collection.count() > 0:
-                print(f"DEBUG: Loaded existing ChromaDB with {vector_store._collection.count()} documents.")
+                print(f"DEBUG: Successfully loaded downloaded ChromaDB with {vector_store._collection.count()} documents.")
                 return vector_store
             else:
-                print("DEBUG: Existing ChromaDB found but it's empty. Proceeding with re-ingestion.")
-                is_chroma_populated = False
+                print("DEBUG: Downloaded DB is empty or corrupt. Falling back to fresh ingestion.")
+
+        except requests.exceptions.RequestException as req_err:
+            print(f"ERROR: Network/Request error downloading pre-built DB: {req_err}. Falling back to fresh ingestion.")
+        except zipfile.BadZipFile as zip_err:
+            print(f"ERROR: Downloaded file is not a valid zip: {zip_err}. Falling back to fresh ingestion.")
         except Exception as e:
-            print(f"ERROR: Failed to load existing ChromaDB from '{chroma_dir_str}': {e}. Attempting re-ingestion.")
-            is_chroma_populated = False
+            print(f"ERROR: Failed to download or extract pre-built DB: {e}. Falling back to fresh ingestion.")
+    elif not is_chroma_populated_locally and PREBUILT_DB_URL == "YOUR_PUBLIC_DOWNLOAD_URL_FOR_DB.zip":
+        print("DEBUG: PREBUILT_DB_URL not configured. Proceeding with fresh ingestion.")
 
-    if not is_chroma_populated:
-        print(f"\n--- DEBUG: Ingesting data as ChromaDB not found, empty, or failed to load ---")
-        all_documents: List[Document] = []
+    # 3. Fallback to Fresh Ingestion (if download fails or not configured)
+    print(f"\n--- DEBUG: Performing fresh data ingestion ---")
+    all_documents: List[Document] = []
 
-        # --- Load ALL PDF Documents from PPC_PDF_DIR (e.g., 'data' folder) ---
-        # PyPDFDirectoryLoader will load all PDFs recursively from this directory and its subfolders.
-        if not Path(ppc_pdf_dir_str).exists():
-            print(f"ERROR: The primary PDF directory '{ppc_pdf_dir_str}' does not exist. Cannot ingest from here.")
-        else:
-            print(f"DEBUG: Loading PDFs from: {ppc_pdf_dir_str} (recursively)")
-            try:
-                pdf_loader_primary = PyPDFDirectoryLoader(ppc_pdf_dir_str)
-                primary_pdf_docs = pdf_loader_primary.load()
-                # --- ADDED VERIFICATION PRINT STATEMENT ---
-                print(f"DEBUG: Found {len(primary_pdf_docs)} PDF documents in '{ppc_pdf_dir_str}'.")
-                for doc in primary_pdf_docs:
-                    if doc.page_content.strip():
-                        all_documents.append(doc)
-                        # --- VERIFY PDF CONTENT LOADING ---
-                        # Print source and first 200 characters of content for verification
-                        print(f"DEBUG: Loaded PDF: {doc.metadata.get('source', 'Unknown Source')}, Page {doc.metadata.get('page', 'N/A')}. Content snippet: '{doc.page_content[:200].replace('\n', ' ')}...'")
-                    else:
-                        print(f"DEBUG: Warning: Empty page content found in {doc.metadata.get('source', 'N/A')} page {doc.metadata.get('page', 'N/A')}. Skipping.")
-                print(f"DEBUG: Successfully loaded {len(primary_pdf_docs)} documents from primary PDF directory.")
-            except Exception as e:
-                print(f"ERROR: Failed to load PDFs from '{ppc_pdf_dir_str}': {e}")
-
-        # --- Load Scraped Text Documents from SCRAPED_DATA_DIR ---
-        if not Path(scraped_data_dir_str).exists():
-            print(f"DEBUG: Scraped data directory '{scraped_data_dir_str}' not found. Skipping scraped data loading.")
-        else:
-            print(f"DEBUG: Loading scraped text data from: {scraped_data_dir_str}")
-            scraped_docs_list: List[Document] = [] # Use a new list to collect docs
-            # Iterate through files in the directory to handle errors per file
-            for file_entry in os.listdir(scraped_data_dir_str):
-                file_path = os.path.join(scraped_data_dir_str, file_entry)
-                if os.path.isfile(file_path) and file_path.lower().endswith('.txt'):
-                    try:
-                        # Load each text file individually with explicit encoding
-                        single_txt_loader = TextLoader(file_path, encoding='utf-8')
-                        loaded_doc = single_txt_loader.load()
-                        if loaded_doc and loaded_doc[0].page_content.strip():
-                            scraped_docs_list.extend(loaded_doc)
-                            print(f"DEBUG: Loaded Text: {file_path}. Content snippet: '{loaded_doc[0].page_content[:200].replace('\n', ' ')}...'")
-                        else:
-                            print(f"DEBUG: Warning: Empty page content found in {file_path}. Skipping.")
-                    except Exception as e:
-                        print(f"ERROR: Failed to load text file {file_path}: {e}")
-            
-            print(f"DEBUG: Found {len(scraped_docs_list)} text documents in '{scraped_data_dir_str}'.")
-            if scraped_docs_list:
-                all_documents.extend(scraped_docs_list)
-                print(f"DEBUG: Successfully loaded {len(scraped_docs_list)} documents from scraped text data.")
-            else:
-                print("DEBUG: No text documents were successfully loaded from scraped data directory.")
-
-
-        if not all_documents:
-            print(f"ERROR: No documents were loaded from any source. Cannot proceed with ingestion.")
-            return None
-
-        print(f"DEBUG: Total documents loaded for ingestion: {len(all_documents)}.")
-        # --- ADDED FINAL VERIFICATION PRINT STATEMENT ---
-        print(f"DEBUG: Total documents (PDFs + Text) collected before chunking: {len(all_documents)}.")
-
-
-        text_splitter = RecursiveCharacterTextSplitter(
-            chunk_size=CHUNK_SIZE, # Modified: Further reduced chunk size
-            chunk_overlap=CHUNK_OVERLAP, # Modified: Further reduced chunk overlap
-            length_function=len,
-        )
-        document_chunks: List[Document] = text_splitter.split_documents(all_documents)
-        print(f"DEBUG: Documents chunked into {len(document_chunks)} pieces.")
-
-        print(f"DEBUG: Creating ChromaDB vector store in '{chroma_dir_str}'...")
-        os.makedirs(chroma_dir_str, exist_ok=True)
+    # --- Load ALL PDF Documents from PPC_PDF_DIR (e.g., 'data' folder) ---
+    if not Path(ppc_pdf_dir_str).exists():
+        print(f"ERROR: The primary PDF directory '{ppc_pdf_dir_str}' does not exist. Cannot ingest from here.")
+    else:
+        print(f"DEBUG: Loading PDFs from: {ppc_pdf_dir_str} (recursively)")
         try:
-            vector_store = Chroma.from_documents(
-                documents=document_chunks,
-                embedding=embeddings_model,
-                persist_directory=chroma_dir_str
-            )
-            print(f"DEBUG: ChromaDB vector store created and persisted with {vector_store._collection.count()} documents.")
-            return vector_store
+            pdf_loader_primary = PyPDFDirectoryLoader(ppc_pdf_dir_str)
+            primary_pdf_docs = pdf_loader_primary.load()
+            print(f"DEBUG: Found {len(primary_pdf_docs)} PDF documents in '{ppc_pdf_dir_str}'.")
+            for doc in primary_pdf_docs:
+                if doc.page_content.strip():
+                    all_documents.append(doc)
+                    print(f"DEBUG: Loaded PDF: {doc.metadata.get('source', 'Unknown Source')}, Page {doc.metadata.get('page', 'N/A')}. Content snippet: '{doc.page_content[:200].replace('\n', ' ')}...'")
+                else:
+                    print(f"DEBUG: Warning: Empty page content found in {doc.metadata.get('source', 'N/A')} page {doc.metadata.get('page', 'N/A')}. Skipping.")
+            print(f"DEBUG: Successfully loaded {len(primary_pdf_docs)} documents from primary PDF directory.")
         except Exception as e:
-            print(f"ERROR: Failed to create/persist ChromaDB vector store during ingestion: {e}")
-            return None
+            print(f"ERROR: Failed to load PDFs from '{ppc_pdf_dir_str}': {e}")
+
+    # --- Load Scraped Text Documents from SCRAPED_DATA_DIR ---
+    if not Path(scraped_data_dir_str).exists():
+        print(f"DEBUG: Scraped data directory '{scraped_data_dir_str}' not found. Skipping scraped data loading.")
+    else:
+        print(f"DEBUG: Loading scraped text data from: {scraped_data_dir_str}")
+        scraped_docs_list: List[Document] = []
+        for file_entry in os.listdir(scraped_data_dir_str):
+            file_path = os.path.join(scraped_data_dir_str, file_entry)
+            if os.path.isfile(file_path) and file_path.lower().endswith('.txt'):
+                try:
+                    single_txt_loader = TextLoader(file_path, encoding='utf-8')
+                    loaded_doc = single_txt_loader.load()
+                    if loaded_doc and loaded_doc[0].page_content.strip():
+                        scraped_docs_list.extend(loaded_doc)
+                        print(f"DEBUG: Loaded Text: {file_path}. Content snippet: '{loaded_doc[0].page_content[:200].replace('\n', ' ')}...'")
+                    else:
+                        print(f"DEBUG: Warning: Empty page content found in {file_path}. Skipping.")
+                except Exception as e:
+                    print(f"ERROR: Failed to load text file {file_path}: {e}")
+        
+        print(f"DEBUG: Found {len(scraped_docs_list)} text documents in '{scraped_data_dir_str}'.")
+        if scraped_docs_list:
+            all_documents.extend(scraped_docs_list)
+            print(f"DEBUG: Successfully loaded {len(scraped_docs_list)} documents from scraped text data.")
+        else:
+            print("DEBUG: No text documents were successfully loaded from scraped data directory.")
+
+
+    if not all_documents:
+        print(f"ERROR: No documents were loaded from any source. Cannot proceed with ingestion.")
+        return None
+
+    print(f"DEBUG: Total documents loaded for ingestion: {len(all_documents)}.")
+    print(f"DEBUG: Total documents (PDFs + Text) collected before chunking: {len(all_documents)}.")
+
+
+    text_splitter = RecursiveCharacterTextSplitter(
+        chunk_size=CHUNK_SIZE,
+        chunk_overlap=CHUNK_OVERLAP,
+        length_function=len,
+    )
+    document_chunks: List[Document] = text_splitter.split_documents(all_documents)
+    print(f"DEBUG: Documents chunked into {len(document_chunks)} pieces.")
+
+    print(f"DEBUG: Creating ChromaDB vector store in '{chroma_dir_str}'...")
+    os.makedirs(chroma_dir_str, exist_ok=True)
+    try:
+        vector_store = Chroma.from_documents(
+            documents=document_chunks,
+            embedding=embeddings_model,
+            persist_directory=chroma_dir_str
+        )
+        print(f"DEBUG: ChromaDB vector store created and persisted with {vector_store._collection.count()} documents.")
+        return vector_store
+    except Exception as e:
+        print(f"ERROR: Failed to create/persist ChromaDB vector store during ingestion: {e}")
+        return None
     
     return None
 
