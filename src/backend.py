@@ -7,21 +7,20 @@ from langchain.docstore.document import Document
 from typing import List, Optional
 import streamlit as st
 from pathlib import Path
-import requests # Added for downloading
-import zipfile # Added for unzipping
-import io # Added for in-memory zip handling
-import shutil # Added for removing directories
+import requests
+import zipfile
+import io
+import shutil
+import subprocess # Added for running wget
 
 # --- IMPORTANT: Workaround for ChromaDB SQLite3 issue on Streamlit Cloud ---
-# This forces ChromaDB to use the pysqlite3-binary package if available,
-# which provides a newer SQLite3 version compatible with ChromaDB.
 try:
     __import__('pysqlite3')
     sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
     print("DEBUG: Successfully swapped sqlite3 with pysqlite3.")
 except ImportError:
     print("DEBUG: pysqlite3 not found or import failed. Using default sqlite3.")
-    pass # Fallback to default sqlite3 if pysqlite3 isn't available/working
+    pass
 
 
 # LangChain components for RAG
@@ -43,23 +42,20 @@ load_dotenv()
 current_file_dir = Path(__file__).parent
 PROJECT_ROOT_DIR = current_file_dir.parent
 
-# Define directories for your data sources
 PPC_PDF_DIR = PROJECT_ROOT_DIR / "data"
 SCRAPED_DATA_DIR = PROJECT_ROOT_DIR / "scraped_legal_data"
 
-# Convert Path objects to strings for functions that require them
 ppc_pdf_dir_str = str(PPC_PDF_DIR)
 scraped_data_dir_str = str(SCRAPED_DATA_DIR)
 
-# Directory for ChromaDB persistence
 CHROMA_PERSIST_DIRECTORY = PROJECT_ROOT_DIR / "db"
 chroma_dir_str = str(CHROMA_PERSIST_DIRECTORY)
 
 # --- IMPORTANT: Configure your pre-built DB download URL here ---
-# If you upload your 'db' folder as a .zip to Google Drive or another cloud storage,
-# For Google Drive, convert a shareable link like:
-
-PREBUILT_DB_URL = "https://drive.google.com/uc?export=download&id=1NwLs1IApOGV2teNRPyxYjgOzgBNrJZKf" 
+# This URL should be a direct download link for your db.zip file.
+# For Google Drive, use the format: https://drive.google.com/uc?export=download&id=YOUR_FILE_ID_HERE
+# The 'confirm=t' parameter is often helpful for large files to bypass warning pages.
+PREBUILT_DB_URL = "https://drive.google.com/uc?export=download&id=1NwLs1IApOGV2teNRPyxYjgOzgBNrJZKf&confirm=t" # <--- REPLACE 'YOUR_FILE_ID_HERE' WITH YOUR ACTUAL GOOGLE DRIVE FILE ID
 
 CHUNK_SIZE = 200
 CHUNK_OVERLAP = 40
@@ -123,8 +119,9 @@ def ingest_and_get_retriever() -> Optional[Chroma]:
                 print(f"ERROR: Failed to load existing ChromaDB from '{chroma_dir_str}': {e}. Attempting other methods.")
 
     # 2. If local DB is not populated, attempt to download pre-built DB
-    if not is_chroma_populated_locally and PREBUILT_DB_URL != "https://drive.google.com/uc?export=download&id=1NwLs1IApOGV2teNRPyxYjgOzgBNrJZKf":
-        print(f"\n--- DEBUG: Local ChromaDB not populated. Attempting to download pre-built DB from {PREBUILT_DB_URL} ---")
+    # Check if PREBUILT_DB_URL has been configured (i.e., not the placeholder)
+    if not is_chroma_populated_locally and PREBUILT_DB_URL != "https://drive.google.com/uc?export=download&id=1NwLs1IApOGV2teNRPyxYjgOzgBNrJZKf&confirm=t":
+        print(f"\n--- DEBUG: Local ChromaDB not populated. Attempting to download pre-built DB from {PREBUILT_DB_URL} using wget ---")
         try:
             # Clean up any incomplete/corrupt local db folder before downloading
             if Path(chroma_dir_str).exists():
@@ -132,14 +129,36 @@ def ingest_and_get_retriever() -> Optional[Chroma]:
                 shutil.rmtree(chroma_dir_str)
             os.makedirs(chroma_dir_str, exist_ok=True)
 
-            response = requests.get(PREBUILT_DB_URL, stream=True)
-            response.raise_for_status() # Raise an exception for HTTP errors (4xx or 5xx)
-
-            # Use a temporary file to save the zip content
+            # Define the path for the downloaded zip file
             zip_file_path = Path(chroma_dir_str) / "temp_db.zip"
-            with open(zip_file_path, 'wb') as f:
-                for chunk in response.iter_content(chunk_size=8192):
-                    f.write(chunk)
+
+            # Use subprocess to call wget
+            # -O: output document to a specific file
+            # --no-check-certificate: useful for some https issues, but generally avoid if not needed
+            # --quiet: suppress output, but we want some for debugging
+            # -q: quiet (less verbose than --quiet)
+            # -nc: no clobber (don't overwrite existing files) - not strictly needed here since we clear the dir
+            # --show-progress: show progress bar (might not appear in Streamlit logs)
+            wget_command = [
+                "wget",
+                "-O", str(zip_file_path),
+                PREBUILT_DB_URL
+            ]
+            print(f"DEBUG: Executing wget command: {' '.join(wget_command)}")
+            
+            # Run wget, capture output for debugging
+            result = subprocess.run(wget_command, capture_output=True, text=True, check=False)
+
+            if result.returncode != 0:
+                print(f"ERROR: wget command failed with exit code {result.returncode}.")
+                print(f"wget stdout: {result.stdout}")
+                print(f"wget stderr: {result.stderr}")
+                raise Exception(f"wget download failed: {result.stderr}")
+
+            print(f"DEBUG: wget completed. Checking downloaded file...")
+
+            if not zip_file_path.exists() or zip_file_path.stat().st_size == 0:
+                raise Exception(f"Downloaded file '{zip_file_path}' does not exist or is empty.")
 
             print(f"DEBUG: Downloaded temp_db.zip to {zip_file_path}. Extracting...")
             with zipfile.ZipFile(zip_file_path, 'r') as zip_ref:
@@ -156,13 +175,11 @@ def ingest_and_get_retriever() -> Optional[Chroma]:
             else:
                 print("DEBUG: Downloaded DB is empty or corrupt. Falling back to fresh ingestion.")
 
-        except requests.exceptions.RequestException as req_err:
-            print(f"ERROR: Network/Request error downloading pre-built DB: {req_err}. Falling back to fresh ingestion.")
-        except zipfile.BadZipFile as zip_err:
-            print(f"ERROR: Downloaded file is not a valid zip: {zip_err}. Falling back to fresh ingestion.")
+        except FileNotFoundError:
+            print("ERROR: 'wget' command not found. Please ensure wget is installed in the environment. Falling back to fresh ingestion.")
         except Exception as e:
-            print(f"ERROR: Failed to download or extract pre-built DB: {e}. Falling back to fresh ingestion.")
-    elif not is_chroma_populated_locally and PREBUILT_DB_URL == "YOUR_PUBLIC_DOWNLOAD_URL_FOR_DB.zip":
+            print(f"ERROR: Failed to download or extract pre-built DB using wget: {e}. Falling back to fresh ingestion.")
+    elif not is_chroma_populated_locally and PREBUILT_DB_URL == "https://drive.google.com/uc?export=download&id=YOUR_FILE_ID_HERE&confirm=t":
         print("DEBUG: PREBUILT_DB_URL not configured. Proceeding with fresh ingestion.")
 
     # 3. Fallback to Fresh Ingestion (if download fails or not configured)
@@ -389,19 +406,15 @@ def get_conversational_rag_chain():
 
 # --- Direct Testing Block (will only run if backend.py is executed directly) ---
 if __name__ == "__main__":
-    # This block is for local testing/debugging the backend script directly.
-    # It will not run when deployed via Streamlit.
     print("DEBUG: Testing backend.py directly with conversational chain...")
     if os.getenv("OPENAI_API_KEY") is None:
-        # Placeholder for local testing if API key not in .env
         os.environ["OPENAI_API_KEY"] = "sk-YOUR_TEST_OPENAI_API_KEY_HERE"
         print("DEBUG: Set dummy OPENAI_API_KEY for direct backend.py testing.")
 
     chain = get_conversational_rag_chain()
     if chain:
-        session_id = "test_session_123" # A unique ID for the conversation session
+        session_id = "test_session_123"
 
-        # Clear history for fresh test
         if session_id in ChatMessageHistory.store:
              del ChatMessageHistory.store[session_id]
 
@@ -416,7 +429,7 @@ if __name__ == "__main__":
 
         print("\n--- Test Case 2: Follow-up on punishment ---")
         query2 = "What punishment is prescribed for such an act?"
-        print(f"DEBUG: Querying: '{query2}')")
+        print(f"DEBUG: Querying: '{query2}'")
         try:
             response2 = chain.invoke({"input": query2}, config={"configurable": {"session_id": session_id}})
             print(f"Answer: {response2.get('answer', 'No answer found.')}")
@@ -434,7 +447,7 @@ if __name__ == "__main__":
 
         print("\n--- Test Case 4: Irrelevant question ---")
         query4 = "What is the capital of France?"
-        print(f"DEBUG: Querying: '{query4}')")
+        print(f"DEBUG: Querying: '{query4}'")
         try:
             response4 = chain.invoke({"input": query4}, config={"configurable": {"session_id": session_id}})
             print(f"Answer: {response4.get('answer', 'No answer found.')}")
