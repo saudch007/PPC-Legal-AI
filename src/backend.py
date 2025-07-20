@@ -166,7 +166,8 @@ def ingest_and_get_retriever() -> Optional[Chroma]:
                         # Move contents from the nested directory to the target chroma_dir_str
                         nested_db_path = temp_extract_path / first_dir
                         for item in os.listdir(nested_db_path):
-                            shutil.move(str(nested_db_path / item), str(chroma_dir_str / item))
+                            # Corrected line: Ensure path concatenation uses Path objects or os.path.join
+                            shutil.move(str(nested_db_path / item), str(Path(chroma_dir_str) / item))
                         shutil.rmtree(temp_extract_path) # Clean up temp extraction dir
                     else:
                         print("DEBUG: Zip contents are at root or multiple top-level items. Extracting directly.")
