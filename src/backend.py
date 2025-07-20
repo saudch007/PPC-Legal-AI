@@ -7,11 +7,10 @@ from langchain.docstore.document import Document
 from typing import List, Optional
 import streamlit as st
 from pathlib import Path
-import requests # Used for downloading
-import zipfile # Used for unzipping
-import io # Used for in-memory zip handling
-import shutil # Used for removing directories
-# Removed subprocess as wget is no longer used
+import requests
+import zipfile
+import io
+import shutil
 
 # --- IMPORTANT: Workaround for ChromaDB SQLite3 issue on Streamlit Cloud ---
 try:
@@ -53,9 +52,12 @@ chroma_dir_str = str(CHROMA_PERSIST_DIRECTORY)
 
 # --- IMPORTANT: Configure your pre-built DB download URL here ---
 # This URL should be a direct download link for your db.zip file.
-# For Google Drive, use the format: https://drive.google.com/uc?export=download&id=YOUR_FILE_ID_HERE
-# The 'confirm=t' parameter is often helpful for large files to bypass warning pages.
-PREBUILT_DB_URL = "https://github.com/saudch007/PPC-Legal-AI/releases/download/data-v1.0.0-t1/db.zip" # <--- REPLACE 'YOUR_FILE_ID_HERE' WITH YOUR ACTUAL GOOGLE DRIVE FILE ID
+# For GitHub Releases, it will look like:
+# https://github.com/YOUR_USERNAME/YOUR_REPO_NAME/releases/download/YOUR_TAG_NAME/db.zip
+#
+# YOU MUST REPLACE THE ENTIRE STRING BELOW WITH YOUR ACTUAL URL FROM GITHUB RELEASES.
+# If this value is not changed, the application will fall back to fresh ingestion.
+PREBUILT_DB_URL = "https://github.com/saudch007/PPC-Legal-AI/releases/download/data-v1.0.0-t1/db.zip" # <--- REPLACE THIS
 
 CHUNK_SIZE = 200
 CHUNK_OVERLAP = 40
@@ -136,38 +138,44 @@ def ingest_and_get_retriever() -> Optional[Chroma]:
             print(f"DEBUG: Download response status code: {response.status_code}")
             print(f"DEBUG: Download response headers: {response.headers}") # Print headers for debugging
 
-            # Check if the response is actually a file download (not an HTML page)
-            content_type = response.headers.get('Content-Type', '')
-            content_disposition = response.headers.get('Content-Disposition', '')
+            # Write the content to a temporary zip file
+            zip_file_path = Path(chroma_dir_str) / "temp_db.zip"
+            with open(zip_file_path, 'wb') as f:
+                for chunk in response.iter_content(chunk_size=8192):
+                    f.write(chunk)
 
-            # If it's not a direct attachment or is HTML, it might be an HTML page (e.g., warning page)
-            if 'application/zip' not in content_type and 'application/octet-stream' not in content_type and 'filename=' not in content_disposition:
-                # Try to read a small part of content to check if it's HTML
-                # Use a BytesIO buffer to store the initial chunk so it can be re-read by zipfile
-                buffer = io.BytesIO()
-                initial_content_chunk = next(response.iter_content(chunk_size=1024))
-                buffer.write(initial_content_chunk)
-                buffer.seek(0) # Rewind buffer to read from beginning
-
-                initial_content_str = buffer.read().decode('utf-8', errors='ignore')
-                buffer.seek(0) # Rewind again for zipfile
-
-                if "<!DOCTYPE html" in initial_content_str.lower() or "<html" in initial_content_str.lower():
-                    raise requests.exceptions.RequestException("Response is likely an HTML page, not a direct file download. Check Google Drive sharing permissions or URL.")
+            print(f"DEBUG: Downloaded temp_db.zip to {zip_file_path}. Extracting...")
+            
+            # --- Robust Extraction Logic ---
+            with zipfile.ZipFile(zip_file_path, 'r') as zip_ref:
+                # Get list of all members in the zip file
+                zip_members = zip_ref.namelist()
                 
-                # If it's not HTML, the buffer already contains the initial chunk
-                file_content_stream = buffer
-            else:
-                file_content_stream = io.BytesIO()
+                # Check if there's a single top-level directory (e.g., 'db/')
+                # and if all members start with that directory name
+                first_dir = None
+                if zip_members and '/' in zip_members[0]:
+                    first_dir = zip_members[0].split('/')[0] + '/'
+                    if all(member.startswith(first_dir) for member in zip_members):
+                        print(f"DEBUG: Zip contains a single top-level directory '{first_dir}'. Extracting contents to parent.")
+                        # Extract all contents to a temporary location first
+                        temp_extract_path = Path(chroma_dir_str).parent / f"temp_extract_{os.urandom(4).hex()}"
+                        os.makedirs(temp_extract_path, exist_ok=True)
+                        zip_ref.extractall(temp_extract_path)
 
-            # Write the rest of the stream content
-            for chunk in response.iter_content(chunk_size=8192):
-                file_content_stream.write(chunk)
-            file_content_stream.seek(0) # Rewind to the beginning for zipfile
-
-            print(f"DEBUG: Downloaded stream. Attempting to extract zip from memory...")
-            with zipfile.ZipFile(file_content_stream, 'r') as zip_ref:
-                zip_ref.extractall(chroma_dir_str)
+                        # Move contents from the nested directory to the target chroma_dir_str
+                        nested_db_path = temp_extract_path / first_dir
+                        for item in os.listdir(nested_db_path):
+                            shutil.move(str(nested_db_path / item), str(chroma_dir_str / item))
+                        shutil.rmtree(temp_extract_path) # Clean up temp extraction dir
+                    else:
+                        print("DEBUG: Zip contents are at root or multiple top-level items. Extracting directly.")
+                        zip_ref.extractall(chroma_dir_str)
+                else:
+                    print("DEBUG: Zip contents are at root. Extracting directly.")
+                    zip_ref.extractall(chroma_dir_str)
+            
+            os.remove(zip_file_path) # Clean up temp zip file
 
             print(f"DEBUG: Successfully downloaded and extracted pre-built DB to {chroma_dir_str}")
 
@@ -182,10 +190,10 @@ def ingest_and_get_retriever() -> Optional[Chroma]:
         except requests.exceptions.RequestException as req_err:
             print(f"ERROR: Network/Request error downloading pre-built DB: {req_err}. Falling back to fresh ingestion.")
         except zipfile.BadZipFile as zip_err:
-            print(f"ERROR: Downloaded file is not a valid zip: {zip_err}. This often means the URL provided an HTML page instead of a zip file. Falling back to fresh ingestion.")
+            print(f"ERROR: Downloaded file is not a valid zip: {zip_err}. This might mean the URL was incorrect or the file was corrupted during download. Falling back to fresh ingestion.")
         except Exception as e:
             print(f"ERROR: Failed to download or extract pre-built DB using requests: {e}. Falling back to fresh ingestion.")
-    elif not is_chroma_populated_locally and PREBUILT_DB_URL == "https://drive.google.com/uc?export=download&id=YOUR_FILE_ID_HERE&confirm=t":
+    elif not is_chroma_populated_locally and PREBUILT_DB_URL == "REPLACE_THIS_WITH_YOUR_ACTUAL_GITHUB_RELEASE_DOWNLOAD_URL_FOR_DB.zip":
         print("DEBUG: PREBUILT_DB_URL not configured. Proceeding with fresh ingestion.")
 
     # 3. Fallback to Fresh Ingestion (if download fails or not configured)
@@ -362,7 +370,7 @@ def get_conversational_rag_chain():
     - **Cite Sources:** Always cite the relevant section numbers from the PPC (e.g., "Section 391 states...") or reference specific judgments if the information is derived from them (e.g., "As per the judgment in [Case Name/Citation]...").
     - **Formal and Objective Tone:** Maintain a professional, objective, and formal tone. Avoid colloquialisms, emojis, or excessive punctuation.
     - **Legal Scope Only:** If the input is clearly outside the scope of Pakistani legal documents (e.g., general knowledge, personal opinions, or questions about other legal systems), \
-      politely inform the user that you are specialized in Pakistani law and cannot analyze the given information. Do not attempt to answer unrelated queries.
+      polite inform the user that you are specialized in Pakistani law and cannot analyze the given information. Do not attempt to answer unrelated queries.
     - **Disclaimer:** Conclude every analysis with a clear disclaimer: "Please note: This is an AI-generated legal analysis based solely on the provided Pakistani legal documents. It is for informational purposes only and does not constitute legal advice or a judicial ruling. A qualified legal professional should always be consulted for definitive legal opinions and decisions."
 
     Context: {context}
