@@ -55,7 +55,7 @@ chroma_dir_str = str(CHROMA_PERSIST_DIRECTORY)
 # This URL should be a direct download link for your db.zip file.
 # For Google Drive, use the format: https://drive.google.com/uc?export=download&id=YOUR_FILE_ID_HERE
 # The 'confirm=t' parameter is often helpful for large files to bypass warning pages.
-PREBUILT_DB_URL = "https://drive.google.com/uc?export=download&id=1NwLs1IApOGV2teNRPyxYjgOzgBNrJZKf&confirm=t" # <--- REPLACE 'YOUR_FILE_ID_HERE' WITH YOUR ACTUAL GOOGLE DRIVE FILE ID
+PREBUILT_DB_URL = "https://github.com/saudch007/PPC-Legal-AI/releases/download/data-v1.0.0-t1/db.zip" # <--- REPLACE 'YOUR_FILE_ID_HERE' WITH YOUR ACTUAL GOOGLE DRIVE FILE ID
 
 CHUNK_SIZE = 200
 CHUNK_OVERLAP = 40
@@ -120,7 +120,7 @@ def ingest_and_get_retriever() -> Optional[Chroma]:
 
     # 2. If local DB is not populated, attempt to download pre-built DB
     # Check if PREBUILT_DB_URL has been configured (i.e., not the placeholder)
-    if not is_chroma_populated_locally and PREBUILT_DB_URL == "https://drive.google.com/uc?export=download&id=1NwLs1IApOGV2teNRPyxYjgOzgBNrJZKf&confirm=t":
+    if not is_chroma_populated_locally and PREBUILT_DB_URL == "https://github.com/saudch007/PPC-Legal-AI/releases/download/data-v1.0.0-t1/db.zip":
         print(f"\n--- DEBUG: Local ChromaDB not populated. Attempting to download pre-built DB from {PREBUILT_DB_URL} using requests ---")
         try:
             # Clean up any incomplete/corrupt local db folder before downloading
